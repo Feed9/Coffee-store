@@ -11,7 +11,9 @@ namespace Coffee_store.Data.Entity
         public string Name { get; set; }        
         [Required]
         public string IconPath { get; set; }
+
         [ForeignKey("CategoryId")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product>? Products { get; set; } 
+
     }
 }
