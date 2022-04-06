@@ -29,7 +29,7 @@ namespace Coffee_store.Areas.Admin.Controllers
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
-                IconPath = product.IconPath,             
+                IconPath = product.IconPath,
                 CategoryId = categoryId
             }).ToListAsync();
 
@@ -45,8 +45,8 @@ namespace Coffee_store.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
+
             if (product == null)
             {
                 return NotFound();
@@ -73,7 +73,7 @@ namespace Coffee_store.Areas.Admin.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {CategoryId = product.CategoryId});
+                return RedirectToAction(nameof(Index), new { CategoryId = product.CategoryId });
             }
             return View(product);
         }
@@ -124,7 +124,7 @@ namespace Coffee_store.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { CategoryId = product.CategoryId });
             }
             return View(product);
         }
@@ -155,7 +155,7 @@ namespace Coffee_store.Areas.Admin.Controllers
             var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { CategoryId = product.CategoryId });
         }
 
         private bool ProductExists(int id)
