@@ -15,6 +15,6 @@ namespace Coffee_store.Data.Entity
         public int Price { get; set; }
         public string UserId { get; set; }
         [ForeignKey("OrderId")]
-        public virtual ICollection<OrderItem> OrderItems { get; set; }
+        public virtual ICollection<OrderItem>? OrderItems { get; set; }
     }
 }

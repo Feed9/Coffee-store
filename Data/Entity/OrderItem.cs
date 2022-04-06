@@ -10,6 +10,6 @@ namespace Coffee_store.Data.Entity
         public int Volume { get; set; }
         public int Price { get; set; }
         [ForeignKey("OrderItemId")]
-        public virtual ICollection<OrderItemAdditions> OrderAdditions { get; set; }
+        public virtual ICollection<OrderItemAdditions>? OrderAdditions { get; set; }
     }
 }
