@@ -1,4 +1,5 @@
 ﻿$(function () {
+   
 
     var userLoginButton = $("#UserLoginModal button[name='login']").click(onUserLoginClick);
 
