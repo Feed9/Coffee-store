@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Coffee_store</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Coffee_store.styles.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/Coffee_store.styles.css" asp-append-version="true" />*@
 </head>
 <body>
     <header>
@@ -22,9 +22,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @*<li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>*@
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Menu</a>
                         </li>
@@ -37,12 +37,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="#">How to find us?</a>
                         </li>
-                        
+                         <partial name="_AdminPartial" />
                     </ul>
-                    <partial name="_AdminPartial" />
                     <partial name="_BasketPartial" />
                     <partial name="_LoginPartial" />
                 </div>
+
             </div>
         </nav>
     </header>
