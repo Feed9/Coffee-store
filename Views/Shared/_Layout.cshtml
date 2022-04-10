@@ -26,7 +26,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Menu</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Catalog" asp-action="Catalog">Menu</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">News</a>
@@ -37,7 +37,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="#">How to find us?</a>
                         </li>
-                         <partial name="_AdminPartial" />
+                        <partial name="_AdminPartial" />
                     </ul>
                     <partial name="_BasketPartial" />
                     <partial name="_LoginPartial" />
@@ -46,16 +46,14 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid main-cointainer">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer mt-auto py-3 text-muted">
-        <div class="container">
-            &copy; 2022 - Coffee_store - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer class="footer mt-auto py-3 text-muted">
+        <partial name="_FooterPartial" />
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

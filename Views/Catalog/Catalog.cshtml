@@ -1,0 +1,62 @@
+﻿@model Coffee_store.Models.Catalog
+
+@{
+    ViewData["Title"] = "Catalog Page";
+}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="  d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link" asp-controller="Catalog" asp-action="Catalog" asp-route-categoryId="@category.Id">@category.Name</a>
+                        </li>
+                    }
+                    <li class="nav-item ">
+                        <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">all</a>
+                    </li>
+                </ul>
+            </div>
+        </div>        
+        <div class="container-fluid  side-menu-container">
+            <div class="">
+                <div style="display: flex;padding: 20px;background: #00000099">
+                    <form method="get" asp-controller="Catalog" asp-action="Catalog">
+                        <input name="categoryId" type="hidden" value="@ViewBag.CategoryId" />
+                        <select name="sortState" asp-items="@Model.SortStates" onchange="this.form.submit()" class="form-select"></select>
+                    </form>
+                </div>
+                <div class="content-container" style=" background-color: #3b3b52;">
+                    <div class="row">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="col-lg-4 col-sm-6 mb-3">
+                                <div class=" card  cat-product-card">
+                                    <div class="card-img-top">
+                                        <a><img class="card-img-top" src="@product.IconPath" alt=""></a>
+                                    </div>
+                                    <div class="cat-product-details">
+                                        <h4 class="card-title">@product.Name</h4>
+                                        <p class="card-text">@product.Description</p>
+                                        <h4>@product.Price р.</h4>
+                                        <div class="btn btn-primary">
+                                            <a>
+                                                <i class="fas fa-shopping-cart"></i> Add to cart
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
