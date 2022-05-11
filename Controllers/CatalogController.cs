@@ -23,7 +23,7 @@ namespace Coffee_store.Controllers
 
             if (categoryId == null)
             {
-                products =  _context.Products.Select(product => product);
+                products = _context.Products.Select(product => product);
             }
             else
             {
@@ -31,12 +31,13 @@ namespace Coffee_store.Controllers
             }
             List<CatalogProduct> catalogProducts = await products.Select(product => new CatalogProduct()
             {
+                Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 IconPath = product.IconPath,
-                Price = product.PricesAndVolumes.OrderBy(e => e.Volume).Select(e => e.Price).FirstOrDefault()                
+                Price = product.PricesAndVolumes.OrderBy(e => e.Volume).Select(e => e.Price).FirstOrDefault()
 
-            }).ToListAsync();          
+            }).ToListAsync();
 
             ViewBag.sortState = sortState;
             ViewBag.categoryId = categoryId;
@@ -45,6 +46,14 @@ namespace Coffee_store.Controllers
             catalog.SortProducts();
 
             return View(catalog);
+        }
+        public async Task<IActionResult> ProductCard(int productId)
+        {
+            Product? product = await _context.Products.Include(product => product.PricesAndVolumes).FirstOrDefaultAsync(p => p.Id == productId);
+            List<Addition> additions = await _context.Additions.ToListAsync();
+            ProductCard productCard = new ProductCard(product, additions);
+
+            return PartialView("_ProductCardPartial", productCard);
         }
 
     }

@@ -1,0 +1,90 @@
+﻿@model Coffee_store.Models.ProductCard
+<div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
+    <div class="modal-content">
+        <form id="product-form" asp-controller="Cart" asp-action="Index">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Корзина</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="@Model?.Product.IconPath" class="col-12" style="height:400px;" alt="..." />
+                            <input type="hidden" name="productId" value="@Model.Product.Id" />
+                            <h4>@Model?.Product.Name</h4>
+                            <p>@Model?.Product.Description</p>
+                        </div>
+                        <div class="col-6">
+                            @if (@Model?.Product.PricesAndVolumes is not null)
+                            {
+                                <h5>Volume</h5>
+                                <div class=" form-group row">
+                                    <div class="form-check form-check-inline d-flex justify-content-center">
+                                        @foreach (var volume in @Model?.Product.PricesAndVolumes)
+                                        {
+
+                                            <input type="radio" class="btn-check" id="@volume.Id" name="volume"
+                                            value="@volume.Id" autocomplete="off">
+                                            <label for="@volume.Id" class="btn btn-secondary">@volume.Volume ml</label>
+
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                            @if (@Model?.Additions is not null)
+                            {
+                                <h5>Additions</h5>
+                                <div class="form-group row">
+                                    @foreach (var addition in @Model?.Additions)
+                                    {
+                                        <div class=" col-12 col-lg-6">
+                                            <label class="checkbox-btn">
+                                                <input type="checkbox" value="@addition.Id" name="additions">
+                                                <span>
+                                                    <div class="row">
+                                                        <img class="col-6" src="/images/products/combo-1.jpg" style="height:auto;" alt="" />
+                                                        <div class="col-6">
+                                                            <h5>@addition.Name</h5>
+                                                            <div class="d-flex justify-content-between">
+                                                                <p>@addition.Volume</p>
+                                                                <p>@addition.Price руб.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="count-frame col-1 d-flex">
+                            <button type="button" id="minus" class="btn custom-button ">-</button>
+                            <p id="count">1 шт.</p>
+                            <input type="hidden" value="1" name="count" />
+                            <button type="button" id="plus" class="btn custom-button">+</button>
+                        </div>
+                        <div class="col-8">
+                            <span>Errors</span>
+                        </div>
+                        <div class="modal-footer-buttons col-3 d-flex justify-content-between">
+                            <p id="price">Всего: 420 руб.</p>
+                            <button type="button" class="btn custom-button close-modal" data-bs-dismiss="modal">Close</button>
+                            <button type="button" name="add-to-cart" class="btn custom-button">Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

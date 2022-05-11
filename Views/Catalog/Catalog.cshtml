@@ -5,7 +5,7 @@
 }
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="col-2 px-sm-2 px-0 bg-dark">
             <div class="  d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Menu</span>
@@ -22,41 +22,54 @@
                     </li>
                 </ul>
             </div>
-        </div>        
-        <div class="container-fluid  side-menu-container">
-            <div class="">
-                <div style="display: flex;padding: 20px;background: #00000099">
-                    <form method="get" asp-controller="Catalog" asp-action="Catalog">
-                        <input name="categoryId" type="hidden" value="@ViewBag.CategoryId" />
-                        <select name="sortState" asp-items="@Model.SortStates" onchange="this.form.submit()" class="form-select"></select>
-                    </form>
-                </div>
-                <div class="content-container" style=" background-color: #3b3b52;">
-                    <div class="row">
-                        @foreach (var product in Model.Products)
-                        {
-                            <div class="col-lg-4 col-sm-6 mb-3">
-                                <div class=" card  cat-product-card">
-                                    <div class="card-img-top">
-                                        <a><img class="card-img-top" src="@product.IconPath" alt=""></a>
-                                    </div>
-                                    <div class="cat-product-details">
-                                        <h4 class="card-title">@product.Name</h4>
-                                        <p class="card-text">@product.Description</p>
-                                        <h4>@product.Price р.</h4>
-                                        <div class="btn btn-primary">
-                                            <a>
-                                                <i class="fas fa-shopping-cart"></i> Add to cart
-                                            </a>
-                                        </div>
+        </div>
+        <div class="col-10 side-menu-container">
+            <div style="display: flex;padding: 20px;background: #00000099">
+                <form method="get" asp-controller="Catalog" asp-action="Catalog">
+                    <input name="categoryId" type="hidden" value="@ViewBag.CategoryId" />
+                    <select name="sortState" asp-items="@Model.SortStates" onchange="this.form.submit()" class="form-select"></select>
+                </form>
+            </div>
+            <div style=" background-color: #3b3b52;">
+                <div class="row">
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="col-12 col-sm-6 col-md-4 mb-3   cat-product-card">
+                            <div class="card">
+                                <div class="card-img-top">
+                                    <a><img class="card-img-top" src="@product.IconPath" alt=""></a>
+                                </div>
+                                <div class="cat-product-details">
+                                    <h4 class="card-title">@product.Name</h4>
+                                    <p class="card-text">@product.Description</p>
+                                    <h4>@product.Price р.</h4>
+                                    <div class="btn btn-primary">
+                                        <a class="nav-link text-dark open-card" asp-controller="Catalog"
+                                       asp-action="ProductCard" asp-route-productId="@product.Id">
+                                            Добавить
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="modal  fade" id="productCard" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="productCardLabel" aria-hidden="true">
+    @*    <partial name="_ProductCardPartial" />
+    *@
+</div>
+@section Scripts
+{
+
+     @{
+        await Html.RenderPartialAsync("_ProductScriptsPartial");
+
+      }
+
+}
+
 

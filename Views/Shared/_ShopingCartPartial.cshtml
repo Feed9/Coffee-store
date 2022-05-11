@@ -1,0 +1,48 @@
+﻿@using Coffee_store.Models;
+@model Cart
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header  text-white" style=" background-color: #1d1d29;">
+            <h5 class="modal-title" id="exampleModalLabel">Коризина</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            @if (@Model is null || @Model?.CartItems is null)
+            {
+                <p>Ouups... Something is wrong</p>
+            }
+            else
+            {
+                foreach (var item in @Model.CartItems)
+                {
+                    <div class="row">
+                        <div class="col cart-item-icon">
+                            <img src="@item.Product?.IconPath" style="height:100px;width:100px;" alt="" />
+                        </div>
+                        <div class="col cart-item-text">
+                            <h5>@item.Product?.Name</h5>
+                            <p>Volume: @item.Volume </p>
+                            <p>Additions: @item.AdditionsString</p>
+                        </div>
+                        <div class="col d-flex">
+                            <button class="minus">-</button>
+                            <p class="cart-item-quantity">@item.Count</p>
+                            <button class="plus">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <p>@item.TotalCost руб</p>
+
+                    </div>
+                }
+            }
+        </div>
+        <div class="modal-footer">
+            <div class="modal-footer-buttons">
+                <h5>Сумма заказа: @Model?.TotalCost</h5>
+                <button type="submit" class="custom-button">Перейти к оплате</button>
+            </div>
+        </div>
+    </div>
+</div>

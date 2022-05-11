@@ -1,4 +1,4 @@
-/*html {
+html {
     font-size: 14px;
 }
 
@@ -15,16 +15,82 @@ html {
 
 body {
     margin-bottom: 60px;
-}*/
-/**/
+}
+
 /* container*/
 .main-cointainer {
-    /*max-width: auto*/;
-    padding: 20px;
-    background-color: aqua;
+    /*max-width: auto*/
+    padding: 0px;
+    /*background-color: aqua;*/
 }
 
 /* card-catalog */
+/*.cat-product-card {
+    max-height: 500px;
+}*/
+
+
+/*ADDITION BUTTONS*/
+
+/*.checkbox-btn {
+    display: inline-block;
+    margin: 0 5px 0 0;
+    user-select: none;
+    position: relative;
+}*/
+.checkbox-btn input[type=checkbox] {
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+.checkbox-btn span {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0px 10px;
+    line-height: 30px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+/*Checked*/
+.checkbox-btn input[type=checkbox]:checked + span {
+    border: solid red;
+}
+
+/* Focus */
+/*.focused span {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}*/
+
+/* Hover */
+.checkbox-btn:hover {
+    color: #666;
+}
+
+/*Active*/
+.checkbox-btn input[type=checkbox]:active:not(:disabled) + span {
+    background: #d2c5ac;
+    color: #000;
+}
+/*CUSTOM BUTTONS*/
+.custom-button {
+    background-color: #1d1d29;
+    color: #f4ebdb;
+    border: none;
+    padding: 5px;
+    border-radius: 2%;
+}
+
+    .custom-button:hover {
+        background-color: #DFD3C3;
+        color: #1d1d29;
+        font-weight: 600;
+    }
+/*FOOTER*/
 
 footer {
     margin-top: auto;
