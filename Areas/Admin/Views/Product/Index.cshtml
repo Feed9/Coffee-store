@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create" asp-route-categoryId="@ViewBag.CategoryId">Create New</a>
+    <a asp-action="Create" asp-route-categoryId="@ViewData["CategoryId"]">Create New</a>
     <a asp-controller="Category" asp-action="Index" >Back to List</a>
 </p>
 <table class="table">

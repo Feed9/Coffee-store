@@ -39,10 +39,6 @@
                         </li>
                         <partial name="_AdminPartial" />
                     </ul>
-                    <a class="nav-link" id="open-cart" asp-area="" asp-controller="Cart" asp-action="Cart"
-                       >корзина</a>
-                    <div class="modal fade" id="modal-cart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    </div>
                     <partial name="_LoginPartial" />
                 </div>
 
@@ -51,22 +47,24 @@
     </header>
     <div class="container-fluid main-cointainer">
         <main role="main" class="pb-3">
-            @* <div class="modal fade" id="UserLoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <partial name="_UserLoginPartial" />
-                </div>
-                <div class="modal fade" id="UserRegistrationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <partial name="_UserRegistrationPartial" />
-                </div>*@
             @RenderBody()
         </main>
     </div>
-
     <footer class="footer mt-auto py-3 text-muted">
         <partial name="_FooterPartial" />
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/AddToShopingCart.js" asp-append-version="true"></script>
+    <script src="~/js/OpenProductCard.js" asp-append-version="true"></script>
+    <script src="~/js/BoostrapAlerts.js" asp-append-version="true"></script>
+    <script src="~/js/Cart.js" asp-append-version="true"></script>
+    <script src="~/js/UserRegistration.js" asp-append-version="true"></script>
+    <script src="~/js/UserLogIn.js" asp-append-version="true"></script>
+    <script src="~/js/BoostrapAlerts.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

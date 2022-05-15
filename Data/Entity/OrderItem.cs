@@ -6,10 +6,20 @@ namespace Coffee_store.Data.Entity
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
-        public int Product { get; set; }
-        public int Volume { get; set; }
-        public int Price { get; set; }
-        [ForeignKey("OrderItemId")]
-        public virtual ICollection<OrderItemAdditions>? OrderAdditions { get; set; }
+        public Order? Order { get; set; }
+        public int? ProductId { get; set; }
+        public Product Product { get; set; }
+        public double Volume { get; set; }
+        public double Price { get; set; }
+        public int Count { get; set; }
+        public virtual ICollection<Addition>? OrderAdditions { get; set; }
+
+        [NotMapped]
+        public string AdditionsString => GetAdditionsAsString();
+        private string GetAdditionsAsString()
+        {
+            var additionsTitles = OrderAdditions?.Select(ads => ads.Name).ToList();
+            return OrderAdditions is null ? String.Empty : String.Join(",", additionsTitles!);
+        }
     }
 }

@@ -5,7 +5,7 @@
 
     function onUserLoginClick() {
 
-        var url = "UserAuth/LogIn";
+        var url = $('#UserLoginForm').attr('action');
 
         var antiForgeryToken = $("#UserLoginModal input[name='__RequestVerificationToken']").val();
 
@@ -42,15 +42,12 @@
                     $.validator.unobtrusive.parse(form);
 
                 }
-                else {
-                    location.href = 'Home/Index';
-
+                else {                    
+                    window.location.reload();
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                var errorText = "Status: " + xhr.status + " - " + xhr.statusText;
 
-                PresentClosableBootstrapAlert("#alert_placeholder_login", "danger", "Error!", errorText);
 
                 console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }

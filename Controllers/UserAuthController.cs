@@ -68,8 +68,7 @@ namespace Coffee_store.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Address = model.Address,
+                    LastName = model.LastName,                    
                     PhoneNumber = model.PhoneNumber
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);

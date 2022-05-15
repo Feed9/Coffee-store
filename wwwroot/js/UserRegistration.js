@@ -18,7 +18,8 @@
 
         var email = $("#UserRegistrationModal input[name = 'Email']").val();
 
-        var url = "UserAuth/UserExists?userName=" + email;
+        var url = "/UserAuth/UserExists?userName=" + email;
+        CloseAlert("#alert_placeholder_register");
 
         $.ajax({
             type: "GET",
@@ -34,12 +35,9 @@
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                var errorText = "Status: " + xhr.status + " - " + xhr.statusText;
 
-                PresentClosableBootstrapAlert("#alert_placeholder_register", "danger", "Error!", errorText);
 
                 console.error(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
-
             }
         });
     });
@@ -48,7 +46,7 @@
 
     function onUserRegisterClick() {
 
-        var url = "UserAuth/Register";
+        var url = $('#UserRegistrationForm').attr('action');
 
         var antiForgeryToken = $("#UserRegistrationModal input[name='__RequestVerificationToken']").val();
 
@@ -57,7 +55,6 @@
         var confirmPassword = $("#UserRegistrationModal input[name = 'ConfirmPassword']").val();
         var firstName = $("#UserRegistrationModal input[name = 'FirstName']").val();
         var lastName = $("#UserRegistrationModal input[name = 'LastName']").val();
-        var address = $("#UserRegistrationModal input[name = 'Address']").val();
         var phoneNumber = $("#UserRegistrationModal input[name = 'PhoneNumber']").val();
 
 
@@ -67,8 +64,7 @@
             Password: password,
             ConfirmPassword: confirmPassword,
             FirstName: firstName,
-            LastName: lastName,
-            Address: address,
+            LastName: lastName,            
             PhoneNumber: phoneNumber
         };
 
@@ -95,14 +91,11 @@
 
                 }
                 else {
-                    location.href = 'Home/Index';
+                    window.location.reload();
 
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                var errorText = "Status: " + xhr.status + " - " + xhr.statusText;
-
-                PresentClosableBootstrapAlert("#alert_placeholder_register", "danger", "Error!", errorText);
 
                 console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }

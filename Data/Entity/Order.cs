@@ -12,7 +12,11 @@ namespace Coffee_store.Data.Entity
         public string PaymentMethod { get; set; }
         [Required]
         public string Status { get; set; }
-        public int Price { get; set; }
+        [Required]
+        public double Price { get; set; }
+        [Required]
+        public string Address { get; set; }
+        [Required]
         public string UserId { get; set; }
         [ForeignKey("OrderId")]
         public virtual ICollection<OrderItem>? OrderItems { get; set; }

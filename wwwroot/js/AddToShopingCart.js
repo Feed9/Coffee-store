@@ -14,12 +14,14 @@ function onAddToCartClick() {
         url: url,
         data: CartItem,
         success: function (data) {
-
+            $("#productCard").modal('hide');
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            var errorText = "Status: " + xhr.status + " - " + xhr.statusText;
 
-            PresentClosableBootstrapAlert("#alert_placeholder_register", "danger", "Error!", errorText);
+            if (xhr.status = "401") {
+                $("#productCard").modal('hide');
+                $("#UserLoginModal").modal('show');
+            }
 
             console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }

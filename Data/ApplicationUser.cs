@@ -12,9 +12,7 @@ namespace Coffee_store.Data
 
         [StringLength(100)]
         public string LastName { get; set; }
-
-        [StringLength(250)]
-        public string? Address { get; set; }
+        
         [ForeignKey("UserId")]
         public virtual ICollection<Order>? Orders { get; set; } 
     }

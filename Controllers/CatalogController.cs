@@ -39,13 +39,13 @@ namespace Coffee_store.Controllers
 
             }).ToListAsync();
 
-            ViewBag.sortState = sortState;
-            ViewBag.categoryId = categoryId;
-
             Catalog catalog = new Catalog(categories, catalogProducts, sortState);
             catalog.SortProducts();
 
-            return View(catalog);
+            ViewBag.sortState = sortState;
+            ViewBag.categoryId = categoryId;
+            ViewBag.catalog = catalog; 
+            return View();
         }
         public async Task<IActionResult> ProductCard(int productId)
         {

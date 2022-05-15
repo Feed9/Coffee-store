@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Coffee_store.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -15,7 +16,6 @@ namespace Coffee_store.Controllers
             _context = context;
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(int productId, int volume, int[] additions, int count)

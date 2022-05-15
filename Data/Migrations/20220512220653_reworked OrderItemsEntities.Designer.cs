@@ -4,6 +4,7 @@ using Coffee_store.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,31 +12,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coffee_store.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220512220653_reworked OrderItemsEntities")]
+    partial class reworkedOrderItemsEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("AdditionOrderItem", b =>
-                {
-                    b.Property<int>("OrderAdditionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderItemsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderAdditionsId", "OrderItemsId");
-
-                    b.HasIndex("OrderItemsId");
-
-                    b.ToTable("AdditionOrderItem");
-                });
 
             modelBuilder.Entity("Coffee_store.Data.ApplicationUser", b =>
                 {
@@ -44,6 +31,10 @@ namespace Coffee_store.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -166,10 +157,6 @@ namespace Coffee_store.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -212,8 +199,7 @@ namespace Coffee_store.Data.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("ProductId")
-                        .IsRequired()
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<double>("Volume")
@@ -226,6 +212,29 @@ namespace Coffee_store.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.OrderItemAdditions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AdditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditionId");
+
+                    b.HasIndex("OrderItemId");
+
+                    b.ToTable("OrderItemAdditions");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.PriceVolume", b =>
@@ -420,21 +429,6 @@ namespace Coffee_store.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AdditionOrderItem", b =>
-                {
-                    b.HasOne("Coffee_store.Data.Entity.Addition", null)
-                        .WithMany()
-                        .HasForeignKey("OrderAdditionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Coffee_store.Data.Entity.OrderItem", null)
-                        .WithMany()
-                        .HasForeignKey("OrderItemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Coffee_store.Data.Entity.Order", b =>
                 {
                     b.HasOne("Coffee_store.Data.ApplicationUser", null)
@@ -446,7 +440,7 @@ namespace Coffee_store.Data.Migrations
 
             modelBuilder.Entity("Coffee_store.Data.Entity.OrderItem", b =>
                 {
-                    b.HasOne("Coffee_store.Data.Entity.Order", "Order")
+                    b.HasOne("Coffee_store.Data.Entity.Order", null)
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -458,9 +452,24 @@ namespace Coffee_store.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
-
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.OrderItemAdditions", b =>
+                {
+                    b.HasOne("Coffee_store.Data.Entity.Addition", "Addition")
+                        .WithMany("OrderAdditions")
+                        .HasForeignKey("AdditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Coffee_store.Data.Entity.OrderItem", null)
+                        .WithMany("OrderAdditions")
+                        .HasForeignKey("OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Addition");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.PriceVolume", b =>
@@ -537,6 +546,11 @@ namespace Coffee_store.Data.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.Addition", b =>
+                {
+                    b.Navigation("OrderAdditions");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Category", b =>
                 {
                     b.Navigation("Products");
@@ -545,6 +559,11 @@ namespace Coffee_store.Data.Migrations
             modelBuilder.Entity("Coffee_store.Data.Entity.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.OrderItem", b =>
+                {
+                    b.Navigation("OrderAdditions");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.Product", b =>

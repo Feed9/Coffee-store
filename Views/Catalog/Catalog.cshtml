@@ -1,38 +1,38 @@
-﻿@model Coffee_store.Models.Catalog
-
-@{
+﻿@{
     ViewData["Title"] = "Catalog Page";
 }
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-2 px-sm-2 px-0 bg-dark">
-            <div class="  d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">Menu</span>
-                </a>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    @foreach (var category in Model.Categories)
-                    {
+        <div class="col-12 px-sm-2 px-0 bg-dark  align-items-center">
+            <div class="d-flex justify-content-center align-items-center align-items-sm-start px-3 pt-2 text-white">               
+                <div>
+                    <h2>Menu</h2>
+                    <ul class="nav nav-pills  mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        @foreach (var category in ViewBag.catalog.Categories)
+                        {
+                            <li class="nav-item ">
+                                <a class="nav-link" asp-controller="Catalog" asp-action="Catalog" asp-route-categoryId="@category.Id">@category.Name</a>
+                            </li>
+                        }
                         <li class="nav-item ">
-                            <a class="nav-link" asp-controller="Catalog" asp-action="Catalog" asp-route-categoryId="@category.Id">@category.Name</a>
+                            <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">all</a>
                         </li>
-                    }
-                    <li class="nav-item ">
-                        <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">all</a>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="col-10 side-menu-container">
+    </div>
+    <div class="row">
+        <div class="col-12 side-menu-container">
             <div style="display: flex;padding: 20px;background: #00000099">
                 <form method="get" asp-controller="Catalog" asp-action="Catalog">
                     <input name="categoryId" type="hidden" value="@ViewBag.CategoryId" />
-                    <select name="sortState" asp-items="@Model.SortStates" onchange="this.form.submit()" class="form-select"></select>
+                    <select name="sortState" asp-items="@ViewBag.catalog.SortStates" onchange="this.form.submit()" class="form-select"></select>
                 </form>
             </div>
             <div style=" background-color: #3b3b52;">
                 <div class="row">
-                    @foreach (var product in Model.Products)
+                    @foreach (var product in ViewBag.catalog.Products)
                     {
                         <div class="col-12 col-sm-6 col-md-4 mb-3   cat-product-card">
                             <div class="card">
@@ -59,17 +59,12 @@
     </div>
 </div>
 <div class="modal  fade" id="productCard" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="productCardLabel" aria-hidden="true">
-    @*    <partial name="_ProductCardPartial" />
-    *@
 </div>
-@section Scripts
-{
-
-     @{
-        await Html.RenderPartialAsync("_ProductScriptsPartial");
-
-      }
-
-}
+<div class="modal fade" id="UserLoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <partial name="_UserLoginPartial" />
+</div>
+<div class="modal fade" id="UserRegistrationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <partial name="_UserRegistrationPartial" />
+</div>
 
 

@@ -35,7 +35,7 @@ namespace Coffee_store.Areas.Admin.Controllers
                 CategoryId = categoryId
             }).ToListAsync();
 
-            ViewBag.CategoryId = categoryId;
+            ViewData["CategoryId"] = categoryId;
             return View(products);
         }
 

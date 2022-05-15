@@ -1,0 +1,57 @@
+﻿@using Coffee_store.Data.Entity;
+@model List<Order>
+@{
+    ViewData["Title"] = "Order Page";
+}
+<h2>История Заказов</h2>
+<div>
+
+    @foreach (var item in @Model)
+    {
+        <div style="background-color:peachpuff; margin-bottom:10px; padding:10px;">
+            <div class="row">
+                <div class="col">
+                    <p>@item.Id</p>
+                </div>
+                <div class="col">
+                    <p>@item.Date</p>
+                </div>
+                <div class="col">
+                    <p>@item.Address</p>
+                </div>
+                <div class="col">
+                    <p>@item.PaymentMethod</p>
+                </div>
+                <div class="col">
+                    <p>@item.Status</p>
+                </div>
+                <div class="col">
+                    <a asp-area="" asp-controller="Orders" asp-action="CancelOrder"
+                    asp-route-id="@item.Id">Отменить заказ</a>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var items in @item.OrderItems)
+                {
+                    <div class="row">
+                        <div class="col cart-item-icon">
+                            <img src="@items.Product?.IconPath" style="height:100px;width:100px;" alt="" />
+                        </div>
+                        <div class="col cart-item-text">
+                            <h5>@items.Product?.Name</h5>
+                            <p>Volume: @items.Volume </p>
+                            <p>Additions: @items.AdditionsString</p>
+                        </div>
+                        <div class="col d-flex">
+                            <p class="cart-item-quantity">@items.Count</p>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <p>@items.Price руб</p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

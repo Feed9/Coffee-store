@@ -10,10 +10,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
@@ -37,15 +39,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+InitializeDataBase();
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-    name: "Identity",
-    pattern: "{area:exists}/{controller=Orders}/{action=Index}");
-
+{    
     endpoints.MapControllerRoute(
     name: "Admin",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -58,3 +57,13 @@ app.UseEndpoints(endpoints =>
 app.MapRazorPages();
 
 app.Run();
+
+
+void InitializeDataBase()
+{
+    using(var scope = app.Services.CreateScope())
+    {
+        var initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        initializer.Initialize();
+    }
+}

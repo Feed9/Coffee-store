@@ -47,14 +47,7 @@
                         <input type="text" asp-for="@Model.LastName" class="form-control" placeholder="Last Name" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="@Model.Address" class="col-md-4 col-form-label"></label>
-                    <div class="col-md-8">
-                        <input type="text" asp-for="@Model.Address" class="form-control" placeholder=" Address" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
-                </div>
+                </div>                
                 <div class="form-group row">
                     <label asp-for="@Model.PhoneNumber" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
@@ -70,8 +63,11 @@
                         </div>
                     </div>
                 </div>
-
             </form>
+            <div class="col-sm12">
+                <a class="nav-link text-dark" asp-area=""  data-bs-toggle="modal" data-bs-target="#UserRegistrationModal">LogIn</a>
+
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

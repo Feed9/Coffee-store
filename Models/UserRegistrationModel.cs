@@ -25,8 +25,7 @@ namespace Coffee_store.Models
         [StringLength(256), MinLength(5)]
         [Display(Name = "Last Name")]
         public string? LastName { get; set; }
-        [StringLength(500), MinLength(5)]
-        public string? Address { get; set; }
+        
         [StringLength(15), MinLength(5)]
         [Display(Name = "Phone number")]
         [RegularExpression(@"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$")]

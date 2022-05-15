@@ -24,6 +24,12 @@ namespace Coffee_store.Models
             }
             return false;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ProductId, Volume, AdditionsString);
+        }
+
         private string GetAdditionsAsString()
         {
             var additionsTitles = Additions?.Select(ads => ads.Name).ToList();
