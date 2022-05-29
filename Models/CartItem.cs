@@ -1,4 +1,5 @@
 ﻿using Coffee_store.Data.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Coffee_store.Models
 {
@@ -7,9 +8,13 @@ namespace Coffee_store.Models
         public int ProductId { get; set; }
         public int Count { get; set; }
         public double Volume { get; set; }
-        public double Price { get; set; }
+        [NotMapped]
+        public double ProductPrice { get; set; }
+        [NotMapped]
+        public double AdditionsPrice { get; set; }
         public Product? Product { get; set; }
         public List<Addition>? Additions { get; set; }
+        public double Price => ProductPrice + AdditionsPrice;
         public double TotalCost => Price * Count;
         public string AdditionsString => GetAdditionsAsString();
 
@@ -34,6 +39,6 @@ namespace Coffee_store.Models
         {
             var additionsTitles = Additions?.Select(ads => ads.Name).ToList();
             return Additions is null ? String.Empty : String.Join(",", additionsTitles!);
-        }
+        }       
     }
 }

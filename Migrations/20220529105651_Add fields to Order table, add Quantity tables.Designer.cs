@@ -4,16 +4,18 @@ using Coffee_store.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Coffee_store.Data.Migrations
+namespace Coffee_store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220529105651_Add fields to Order table, add Quantity tables")]
+    partial class AddfieldstoOrdertableaddQuantitytables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,6 +138,28 @@ namespace Coffee_store.Data.Migrations
                     b.ToTable("Additions");
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.AdditionQuantity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AdditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditionId")
+                        .IsUnique();
+
+                    b.ToTable("AdditionQuantity");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -168,6 +192,12 @@ namespace Coffee_store.Data.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
@@ -281,6 +311,28 @@ namespace Coffee_store.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.ProductQuantity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("ProductQuantity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -435,6 +487,17 @@ namespace Coffee_store.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.AdditionQuantity", b =>
+                {
+                    b.HasOne("Coffee_store.Data.Entity.Addition", "Addition")
+                        .WithOne("AdditionQuantity")
+                        .HasForeignKey("Coffee_store.Data.Entity.AdditionQuantity", "AdditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Addition");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Order", b =>
                 {
                     b.HasOne("Coffee_store.Data.ApplicationUser", null)
@@ -479,6 +542,17 @@ namespace Coffee_store.Data.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.ProductQuantity", b =>
+                {
+                    b.HasOne("Coffee_store.Data.Entity.Product", "Product")
+                        .WithOne("ProductQuantity")
+                        .HasForeignKey("Coffee_store.Data.Entity.ProductQuantity", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -537,6 +611,11 @@ namespace Coffee_store.Data.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.Addition", b =>
+                {
+                    b.Navigation("AdditionQuantity");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Category", b =>
                 {
                     b.Navigation("Products");
@@ -552,6 +631,8 @@ namespace Coffee_store.Data.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("PricesAndVolumes");
+
+                    b.Navigation("ProductQuantity");
                 });
 #pragma warning restore 612, 618
         }

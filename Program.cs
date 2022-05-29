@@ -20,6 +20,16 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+
+    options.LoginPath = "/Account/Denied";
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+});
 
 var app = builder.Build();
 
@@ -44,7 +54,7 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
-{    
+{
     endpoints.MapControllerRoute(
     name: "Admin",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -61,7 +71,7 @@ app.Run();
 
 void InitializeDataBase()
 {
-    using(var scope = app.Services.CreateScope())
+    using (var scope = app.Services.CreateScope())
     {
         var initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
         initializer.Initialize();

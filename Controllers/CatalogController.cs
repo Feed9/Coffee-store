@@ -19,16 +19,13 @@ namespace Coffee_store.Controllers
         {
             List<Category> categories = await _context.Categories.ToListAsync();
 
-            IQueryable<Product> products;
+            IQueryable<Product> products = _context.Products.Include(pr => pr.ProductQuantity).Where(pr => pr.ProductQuantity!.Quantity > 0);
 
-            if (categoryId == null)
+            if (categoryId != null)
             {
-                products = _context.Products.Select(product => product);
+                products = products.Where(product => product.CategoryId == categoryId);
             }
-            else
-            {
-                products = _context.Products.Where(product => product.CategoryId == categoryId);
-            }
+
             List<CatalogProduct> catalogProducts = await products.Select(product => new CatalogProduct()
             {
                 Id = product.Id,
@@ -44,13 +41,14 @@ namespace Coffee_store.Controllers
 
             ViewBag.sortState = sortState;
             ViewBag.categoryId = categoryId;
-            ViewBag.catalog = catalog; 
+            ViewBag.catalog = catalog;
             return View();
         }
         public async Task<IActionResult> ProductCard(int productId)
         {
             Product? product = await _context.Products.Include(product => product.PricesAndVolumes).FirstOrDefaultAsync(p => p.Id == productId);
-            List<Addition> additions = await _context.Additions.ToListAsync();
+            List<Addition> additions = await _context.Additions.Include(ad => ad.AdditionQuantity)
+                .Where(ad => ad.AdditionQuantity!.Quantity > 0).ToListAsync();
             ProductCard productCard = new ProductCard(product, additions);
 
             return PartialView("_ProductCardPartial", productCard);

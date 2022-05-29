@@ -9,17 +9,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Coffee_store.Data.Migrations
+namespace Coffee_store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220513142949_tmps")]
-    partial class tmps
+    [Migration("20220529200306_add CancellationRequest table")]
+    partial class addCancellationRequesttable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -46,10 +46,6 @@ namespace Coffee_store.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -142,6 +138,55 @@ namespace Coffee_store.Data.Migrations
                     b.ToTable("Additions");
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.AdditionQuantity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AdditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdditionId")
+                        .IsUnique();
+
+                    b.ToTable("AdditionQuantities");
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.CancellationRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
+                    b.ToTable("CancellationRequests");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -171,6 +216,16 @@ namespace Coffee_store.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -283,6 +338,28 @@ namespace Coffee_store.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.ProductQuantity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("ProductQuantities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -437,6 +514,26 @@ namespace Coffee_store.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.AdditionQuantity", b =>
+                {
+                    b.HasOne("Coffee_store.Data.Entity.Addition", "Addition")
+                        .WithOne("AdditionQuantity")
+                        .HasForeignKey("Coffee_store.Data.Entity.AdditionQuantity", "AdditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Addition");
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.CancellationRequest", b =>
+                {
+                    b.HasOne("Coffee_store.Data.Entity.Order", "Order")
+                        .WithOne("CancellationRequest")
+                        .HasForeignKey("Coffee_store.Data.Entity.CancellationRequest", "OrderId");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Order", b =>
                 {
                     b.HasOne("Coffee_store.Data.ApplicationUser", null)
@@ -481,6 +578,17 @@ namespace Coffee_store.Data.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Coffee_store.Data.Entity.ProductQuantity", b =>
+                {
+                    b.HasOne("Coffee_store.Data.Entity.Product", "Product")
+                        .WithOne("ProductQuantity")
+                        .HasForeignKey("Coffee_store.Data.Entity.ProductQuantity", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -539,6 +647,11 @@ namespace Coffee_store.Data.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.Addition", b =>
+                {
+                    b.Navigation("AdditionQuantity");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Category", b =>
                 {
                     b.Navigation("Products");
@@ -546,6 +659,8 @@ namespace Coffee_store.Data.Migrations
 
             modelBuilder.Entity("Coffee_store.Data.Entity.Order", b =>
                 {
+                    b.Navigation("CancellationRequest");
+
                     b.Navigation("OrderItems");
                 });
 
@@ -554,6 +669,8 @@ namespace Coffee_store.Data.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("PricesAndVolumes");
+
+                    b.Navigation("ProductQuantity");
                 });
 #pragma warning restore 612, 618
         }

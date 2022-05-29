@@ -20,8 +20,20 @@ namespace Coffee_store.Controllers
             _context = dbContext;
             _userManager = userManager;
         }
+        [HttpGet]
+        public IActionResult CreateOrder()
+        {
+            var cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
 
-        public async Task<IActionResult> CreateOrder()
+            if (cartItems is null || cartItems.Count == 0) return RedirectToAction("Index");
+
+            Cart cart = new Cart(cartItems);
+            ViewBag.Cart = cart;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateOrder([Bind("PaymentMethod", "Address", "Comment", "ContactNumber")] Order order)
         {
             var cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
 
@@ -29,40 +41,52 @@ namespace Coffee_store.Controllers
 
             Cart cart = new Cart(cartItems);
 
-            Order order = new Order()
+            order.Date = DateTime.Now;
+            order.Status = OrderStatus.Created.ToString();
+            order.Price = cart.TotalCost;
+            order.UserId = _userManager.GetUserId(User);
+            order.OrderItems = cart.CartItems!.Select(item => new OrderItem()
             {
-                Date = DateTime.Now,
-                Address = "HOME",
-                Status = OrderStatus.Created.ToString(),
-                PaymentMethod = PaymentMethod.Cash.ToString(),
-                Price = cart.TotalCost,
-                UserId = _userManager.GetUserId(User),
-                OrderItems = cart.CartItems!.Select(item => new OrderItem()
-                {
-                    Count = item.Count,
-                    OrderAdditions = _context.Additions.Where(addition => item.Additions.Contains(addition)).ToList(),
-                    Product = _context.Products.FirstOrDefault(product => product.Id == item.ProductId),                   
-                    Price = item.Price,
-                    Volume = item.Volume,                   
-                }).ToList()
+                Count = item.Count,
+                OrderAdditions = _context.Additions.Where(addition => item.Additions.Contains(addition)).ToList(),
+                Product = _context.Products.FirstOrDefault(product => product.Id == item.ProductId),
+                Price = item.Price,
+                Volume = item.Volume,
+            }).ToList();
 
-            };
-            
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             HttpContext.Session.Remove("cart");
             return RedirectToAction("Index");
         }
-
-        public async Task<IActionResult> CancelOrder(int id)
+        [HttpGet]
+        public async Task<IActionResult> CancelOrder(int? id)
         {
-            var order = _context.Orders.FirstOrDefault(order => order.Id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderId = await _context.Orders.Select(order => order.Id).FirstOrDefaultAsync(orderId => orderId == id);
+
+            if (orderId == null)
+            {
+                return NotFound();
+            }
+            ViewBag.OrderId = orderId;
+            return View();            
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelOrder([Bind("OrderId,Reason")] CancellationRequest request)
+        {
+            var order = _context.Orders.FirstOrDefault(order => order.Id == request.OrderId);
             if (order is not null)
             {
                 order.Status = OrderStatus.AwaitingCancellationConfirmation.ToString();
                 _context.Orders.Update(order);
+                _context.CancellationRequests.Add(request);
                 await _context.SaveChangesAsync();
-
             }
             return RedirectToAction("Index");
         }

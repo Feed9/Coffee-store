@@ -12,9 +12,11 @@ namespace Coffee_store.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ProductQuantity> ProductQuantities { get; set; } = null!;
+        public DbSet<AdditionQuantity> AdditionQuantities { get; set; } = null!;
+        public DbSet<CancellationRequest> CancellationRequests { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Addition> Additions { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
