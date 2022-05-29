@@ -1,9 +1,12 @@
-﻿namespace Coffee_store.Data.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Coffee_store.Data.Entity
 {
    enum PaymentMethod
     {
+        [Display(Name ="Карта")]
         Card,
-        Cash,
-        Other
+        [Display(Name = "Наличные")]
+        Cash        
     }
 }

@@ -13,7 +13,8 @@ namespace Coffee_store.Data.Entity
         public string Name { get; set; }
         public double Volume { get; set; }
         [Required]
-        public double Price { get; set; }        
+        public double Price { get; set; }       
+        public AdditionQuantity? AdditionQuantity { get; set; }
         public virtual ICollection<OrderItem>? OrderItems { get; set; }
     }
 }

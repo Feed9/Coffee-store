@@ -16,6 +16,10 @@ namespace Coffee_store.Data.Entity
         public double Price { get; set; }
         [Required]
         public string Address { get; set; }
+        public string? Comment { get; set; }
+        public string? ContactNumber { get; set; }
+        public CancellationRequest? CancellationRequest { get; set; }
+
         [Required]
         public string UserId { get; set; }
         [ForeignKey("OrderId")]

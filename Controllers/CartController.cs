@@ -31,8 +31,9 @@ namespace Coffee_store.Controllers
                 Product = _context.Products.FirstOrDefault(product => product.Id == productId),
                 Count = count,
                 Volume = _context.PricesVolumes.Where(vp => vp.Id == volume).Select(vp => vp.Volume).FirstOrDefault(),
-                Price = _context.PricesVolumes.Where(vp => vp.Id == volume).Select(vp => vp.Price).FirstOrDefault(),
-                Additions = _context.Additions.Where(ads => additions.Contains(ads.Id)).ToList()
+                Additions = _context.Additions.Where(ads => additions.Contains(ads.Id)).ToList(),
+                ProductPrice = _context.PricesVolumes.Where(vp => vp.Id == volume).Select(vp => vp.Price).FirstOrDefault(),
+                AdditionsPrice = _context.Additions.Where(ads => additions.Contains(ads.Id)).Sum(ad => ad.Price)
             };
 
             List<CartItem> cartItems = new();

@@ -1,0 +1,17 @@
+﻿@using Coffee_store.Data.Entity
+@model Coffee_store.Data.Entity.CancellationRequest
+
+@{
+    ViewData["Title"] = "Cancel Order";
+}
+
+<h2>Отказ от заказа.</h2>  
+<form class="needs-validation" asp-action="CancelOrder">
+    <input type="hidden" asp-for="OrderId" value="@ViewBag.OrderId" />
+
+    <div class="col-6 form-group">
+        <label asp-for="Reason" class="control-label">Укажите причину:</label>
+        <input asp-for="Reason" class="form-control" />
+        <span asp-validation-for="Reason" class="text-danger"></span>
+    </div>
+</form>

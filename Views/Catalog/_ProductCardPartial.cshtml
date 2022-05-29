@@ -27,7 +27,7 @@
                                         {
 
                                             <input type="radio" class="btn-check" id="@volume.Id" name="volume"
-                                            value="@volume.Id" autocomplete="off">
+                                            value="@volume.Id" autocomplete="off" checked>
                                             <label for="@volume.Id" class="btn btn-secondary">@volume.Volume ml</label>
 
                                         }
@@ -67,19 +67,9 @@
             </div>
             <div class="modal-footer ">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="count-frame col-1 d-flex">
-                            <button type="button" id="minus" class="btn custom-button ">-</button>
-                            <p id="count">1 шт.</p>
-                            <input type="hidden" value="1" name="count" />
-                            <button type="button" id="plus" class="btn custom-button">+</button>
-                        </div>
-                        <div class="col-8">
-                            <span>Errors</span>
-                        </div>
+                    <div class="row">                        
                         <div class="modal-footer-buttons col-3 d-flex justify-content-between">
                             <p id="price">Всего: 420 руб.</p>
-                            <button type="button" class="btn custom-button close-modal" data-bs-dismiss="modal">Close</button>
                             <button type="button" name="add-to-cart" class="btn custom-button">Add to cart</button>
                         </div>
                     </div>

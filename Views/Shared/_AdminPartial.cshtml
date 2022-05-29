@@ -6,10 +6,6 @@
 @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin"))
 {
     <li class="nav-item ">
-        <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-        <a class="dropdown-item" asp-area="Admin" asp-controller="Addition" asp-action="Index">Additions</a>
+        <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Admin Panel</a>
     </li>
-
-
-
 }

@@ -1,0 +1,105 @@
+﻿@using Coffee_store.Data.Entity
+@model Coffee_store.Data.Entity.Order
+
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<hr />
+<div class="container">
+    <div class="row g-3">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Ваша корзина</span>
+                <span class="badge bg-secondary rounded-pill">@ViewBag?.Cart?.Count</span>
+            </h4>
+            <ul class="list-group mb-3">
+                @foreach (CartItem item in @ViewBag?.Cart?.CartItems)
+                {
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">@item.Product?.Name</h6>
+                            <small class="text-muted">@item.AdditionsString</small>
+                        </div>
+                        <span class="text-muted">@item.TotalCost руб.</span>
+                    </li>
+                }
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Итого</span>
+                    <strong>@ViewBag?.Cart?.TotalCost руб.</strong>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Оформление заказ</h4>
+            <form class="needs-validation" asp-action="CreateOrder">
+                <div class="col-6 form-group">
+                    <label asp-for="ContactNumber" class="control-label">Контактный номер</label>
+                    <input asp-for="ContactNumber" class="form-control" />
+                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                </div>
+                <div class="col-6 form-group">
+                    <label asp-for="Address" class="control-label">Адрес</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="col-6 form-group">
+                    <label asp-for="Comment" class="control-label">Комментарий к заказу"</label>
+                    <textarea asp-for="Comment" class="form-control" > </textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+                <hr class="my-4">
+                <h4 class="mb-3">Оплата</h4>
+                <div class="my-3">
+                    <div class="form-group col-6 ">
+                        <select asp-for="PaymentMethod"
+                                asp-items="Html.GetEnumSelectList<PaymentMethod>()">
+                        </select>
+                        <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="col-md-6">
+                    <label for="cc-name" class="form-label">Имя на карте</label>
+                    <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                    <small class="text-muted">Полное имя, как показано на карточке</small>
+                    <div class="invalid-feedback">
+                        Имя на карте обязательно
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="cc-number" class="form-label">Номер кредитной карты</label>
+                    <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                    <div class="invalid-feedback">
+                        Требуется номер кредитной карты
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label for="cc-expiration" class="form-label">Срок действия</label>
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Требуется срок действия
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="cc-cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Требуется защитный код
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Оформить заказ</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

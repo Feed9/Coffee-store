@@ -9,20 +9,35 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Coffee_store.Data.Migrations
+namespace Coffee_store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220402194751_CreateCustumTables")]
-    partial class CreateCustumTables
+    [Migration("20220528225504_create db")]
+    partial class createdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AdditionOrderItem", b =>
+                {
+                    b.Property<int>("OrderAdditionsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderItemsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderAdditionsId", "OrderItemsId");
+
+                    b.HasIndex("OrderItemsId");
+
+                    b.ToTable("AdditionOrderItem");
+                });
 
             modelBuilder.Entity("Coffee_store.Data.ApplicationUser", b =>
                 {
@@ -31,11 +46,6 @@ namespace Coffee_store.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -158,6 +168,10 @@ namespace Coffee_store.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -165,8 +179,8 @@ namespace Coffee_store.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -191,51 +205,29 @@ namespace Coffee_store.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ProductId")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("Product")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Volume")
-                        .HasColumnType("int");
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("Product");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("Coffee_store.Data.Entity.OrderItemAdditions", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AdditionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdditionId");
-
-                    b.HasIndex("OrderItemId");
-
-                    b.ToTable("OrderItemAdditions");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.PriceVolume", b =>
@@ -430,6 +422,21 @@ namespace Coffee_store.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AdditionOrderItem", b =>
+                {
+                    b.HasOne("Coffee_store.Data.Entity.Addition", null)
+                        .WithMany()
+                        .HasForeignKey("OrderAdditionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Coffee_store.Data.Entity.OrderItem", null)
+                        .WithMany()
+                        .HasForeignKey("OrderItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Order", b =>
                 {
                     b.HasOne("Coffee_store.Data.ApplicationUser", null)
@@ -441,32 +448,21 @@ namespace Coffee_store.Data.Migrations
 
             modelBuilder.Entity("Coffee_store.Data.Entity.OrderItem", b =>
                 {
-                    b.HasOne("Coffee_store.Data.Entity.Order", null)
+                    b.HasOne("Coffee_store.Data.Entity.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Coffee_store.Data.Entity.Product", null)
+                    b.HasOne("Coffee_store.Data.Entity.Product", "Product")
                         .WithMany("OrderItems")
-                        .HasForeignKey("Product")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Coffee_store.Data.Entity.OrderItemAdditions", b =>
-                {
-                    b.HasOne("Coffee_store.Data.Entity.Addition", null)
-                        .WithMany("OrderAdditions")
-                        .HasForeignKey("AdditionId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Coffee_store.Data.Entity.OrderItem", null)
-                        .WithMany("OrderAdditions")
-                        .HasForeignKey("OrderItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.PriceVolume", b =>
@@ -543,11 +539,6 @@ namespace Coffee_store.Data.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Coffee_store.Data.Entity.Addition", b =>
-                {
-                    b.Navigation("OrderAdditions");
-                });
-
             modelBuilder.Entity("Coffee_store.Data.Entity.Category", b =>
                 {
                     b.Navigation("Products");
@@ -556,11 +547,6 @@ namespace Coffee_store.Data.Migrations
             modelBuilder.Entity("Coffee_store.Data.Entity.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("Coffee_store.Data.Entity.OrderItem", b =>
-                {
-                    b.Navigation("OrderAdditions");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.Product", b =>

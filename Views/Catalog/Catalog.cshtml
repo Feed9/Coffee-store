@@ -1,23 +1,28 @@
-﻿@{
+﻿@using Coffee_store.Data.Entity
+@{
     ViewData["Title"] = "Catalog Page";
 }
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-12 px-sm-2 px-0 bg-dark  align-items-center">
-            <div class="d-flex justify-content-center align-items-center align-items-sm-start px-3 pt-2 text-white">               
-                <div>
-                    <h2>Menu</h2>
-                    <ul class="nav nav-pills  mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        @foreach (var category in ViewBag.catalog.Categories)
-                        {
-                            <li class="nav-item ">
-                                <a class="nav-link" asp-controller="Catalog" asp-action="Catalog" asp-route-categoryId="@category.Id">@category.Name</a>
-                            </li>
-                        }
-                        <li class="nav-item ">
-                            <a class="nav-link" asp-controller="Catalog" asp-action="Catalog">all</a>
-                        </li>
-                    </ul>
+            <div class="d-flex justify-content-center align-items-center align-items-sm-start px-3 pt-2 text-white">
+                <h2>Menu</h2>
+                <div class="row h-100  align-items-center">
+                    @foreach (Category category in ViewBag.catalog.Categories)
+                    {
+
+                        <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
+                            <a class="nav-link" asp-controller="Catalog" asp-action="Catalog" asp-route-categoryId="@category.Id">
+                                <div class="card card-span h-100 rounded-circle">
+                                    <img class="img-fluid rounded-circle h-100 mh-50px" src="@category.IconPath" alt="...">
+                                    <div class="card-body ps-0">
+                                        <h5 class="text-center fw-bold text-1000 text-truncate mb-2">@category.Name</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    }
                 </div>
             </div>
         </div>

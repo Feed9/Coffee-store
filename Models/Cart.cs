@@ -4,6 +4,7 @@
     {
         public List<CartItem>? CartItems { get; set; }
         public double TotalCost => GetTotalCost();
+        public int Count => CartItems?.Count ?? 0;
         public Cart(List<CartItem>? cartItems)
         {
             CartItems = cartItems;
