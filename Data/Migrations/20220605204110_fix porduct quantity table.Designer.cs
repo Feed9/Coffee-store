@@ -4,6 +4,7 @@ using Coffee_store.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coffee_store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220605204110_fix porduct quantity table")]
+    partial class fixporductquantitytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,6 +195,9 @@ namespace Coffee_store.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("HasAdditions")
+                        .HasColumnType("bit");
+
                     b.Property<string>("IconPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -346,7 +351,7 @@ namespace Coffee_store.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("PriceVolumeId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -354,8 +359,9 @@ namespace Coffee_store.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+                    b.HasIndex("PriceVolumeId")
+                        .IsUnique()
+                        .HasFilter("[PriceVolumeId] IS NOT NULL");
 
                     b.ToTable("ProductQuantities");
                 });
@@ -580,13 +586,11 @@ namespace Coffee_store.Migrations
 
             modelBuilder.Entity("Coffee_store.Data.Entity.ProductQuantity", b =>
                 {
-                    b.HasOne("Coffee_store.Data.Entity.Product", "Product")
+                    b.HasOne("Coffee_store.Data.Entity.PriceVolume", "PriceVolume")
                         .WithOne("ProductQuantity")
-                        .HasForeignKey("Coffee_store.Data.Entity.ProductQuantity", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Coffee_store.Data.Entity.ProductQuantity", "PriceVolumeId");
 
-                    b.Navigation("Product");
+                    b.Navigation("PriceVolume");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -662,13 +666,16 @@ namespace Coffee_store.Migrations
                     b.Navigation("OrderItems");
                 });
 
+            modelBuilder.Entity("Coffee_store.Data.Entity.PriceVolume", b =>
+                {
+                    b.Navigation("ProductQuantity");
+                });
+
             modelBuilder.Entity("Coffee_store.Data.Entity.Product", b =>
                 {
                     b.Navigation("OrderItems");
 
                     b.Navigation("PricesAndVolumes");
-
-                    b.Navigation("ProductQuantity");
                 });
 #pragma warning restore 612, 618
         }

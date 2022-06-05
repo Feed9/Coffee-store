@@ -18,9 +18,9 @@ namespace Coffee_store.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(int productId, int volume, int[] additions, int count)
+        public async Task<IActionResult> Index(int productId, int volume, int[] additions)
         {
-            if (productId < 1 || volume < 1 || count < 1)
+            if (productId < 1 || volume < 1)
             {
                 return RedirectToAction("Catalog", "Catalog");
             }
@@ -29,7 +29,7 @@ namespace Coffee_store.Controllers
             {
                 ProductId = productId,
                 Product = _context.Products.FirstOrDefault(product => product.Id == productId),
-                Count = count,
+                Count = 1,
                 Volume = _context.PricesVolumes.Where(vp => vp.Id == volume).Select(vp => vp.Volume).FirstOrDefault(),
                 Additions = _context.Additions.Where(ads => additions.Contains(ads.Id)).ToList(),
                 ProductPrice = _context.PricesVolumes.Where(vp => vp.Id == volume).Select(vp => vp.Price).FirstOrDefault(),

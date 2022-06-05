@@ -35,7 +35,7 @@
                                 </div>
                             }
 
-                            @if (@Model?.Additions is not null)
+                            @if (@Model.Product.Category.HasAdditions && @Model?.Additions is not null)
                             {
                                 <h5>Additions</h5>
                                 <div class="form-group row">

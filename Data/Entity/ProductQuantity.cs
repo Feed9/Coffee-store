@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int Quantity { get; set; }
-        public int ProductId { get; set; }
-        public Product? Product { get; set; }
+        public int? PriceVolumeId { get; set; }
+        public PriceVolume? PriceVolume { get; set; }
     }
 }

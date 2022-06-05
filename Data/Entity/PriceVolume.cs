@@ -10,5 +10,7 @@ namespace Coffee_store.Data.Entity
         [Required]
         public double Price { get; set; }
         public double Volume { get; set; }
+        public ProductQuantity? ProductQuantity { get; set; }
+
     }
 }
