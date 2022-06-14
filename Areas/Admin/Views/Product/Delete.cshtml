@@ -10,7 +10,7 @@
 <div>
     <h4>Product</h4>
     <hr />
-    <dl class="row">
+    <dl class="row admin-panel">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -33,7 +33,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="btn book-a-table-btn" /> |
         <a asp-action="Index" asp-route-categoryID="@Model.CategoryId">Back to List</a>
     </form>
 </div>

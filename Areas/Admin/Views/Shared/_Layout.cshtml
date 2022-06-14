@@ -5,47 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Coffee_store</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Coffee_store.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Coffee_store</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+    <div class="wrapper">
+        <!-- ======= Header ======= -->
+        <header id="header" class="d-flex align-items-center mb-5">
+            <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+
+                <h1 class="logo me-auto me-lg-0">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Coffee_store</a>
+                </h1>
+
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <li>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                        </li>                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="Addition" asp-action="Index">Additions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Addition" asp-action="Index">Additions</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+                </nav>
+                <partial name="_LoginPartial" />
+                <!-- .navbar -->
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        </header>
+        <!-- End Header -->
+        <!-- ======= Header ======= -->
+
+        <main role="main" class="main-cointainer pb-3" style="background-color:#1d1d29;">
             @RenderBody()
         </main>
+        <footer id="footer" class="footer mt-auto py-3 text-muted">
+            <partial name="_FooterPartial" />
+        </footer>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <partial name="_FooterPartial" />
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -53,7 +55,11 @@
     <script src="~/js/OpenProductCard.js" asp-append-version="true"></script>
     <script src="~/js/BoostrapAlerts.js" asp-append-version="true"></script>
     <script src="~/js/Cart.js" asp-append-version="true"></script>
+    <script src="~/js/UserRegistration.js" asp-append-version="true"></script>
+    <script src="~/js/UserLogIn.js" asp-append-version="true"></script>
+    <script src="~/js/BoostrapAlerts.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

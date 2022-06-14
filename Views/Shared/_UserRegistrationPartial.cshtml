@@ -59,19 +59,19 @@
                     <div class="col-sm-12">
                         <div class="form-check">
                             <input asp-for="@Model.AcceptUserAgreement" class="form-check-input" />
-                            <label asp-for="@Model.AcceptUserAgreement" class="form-check-label">I accept the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>    </label>
+                            <label asp-for="@Model.AcceptUserAgreement" class="form-check-label">I accept the span<a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>    </label>
                         </div>
                     </div>
                 </div>
             </form>
             <div class="col-sm12">
-                <a class="nav-link text-dark" asp-area=""  data-bs-toggle="modal" data-bs-target="#UserRegistrationModal">LogIn</a>
+                <a class="nav-link reglog" asp-area=""  data-bs-toggle="modal" data-bs-target="#UserRegistrationModal">Войти</a>
 
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" id="registration" name="registration" class="btn btn-primary">Register</button>
+            <button type="button" class="btn  book-a-table-btn" data-bs-dismiss="modal">Закрыть</button>
+            <button type="button" id="registration" name="registration" class="btn book-a-table-btn">Зарегистрироваться</button>
         </div>
     </div>
 </div>
