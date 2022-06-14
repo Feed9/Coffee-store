@@ -91,5 +91,34 @@ namespace Coffee_store.Controllers
         {
             return cartItems.Contains(cartItem);
         }
+
+        public IActionResult ChangeQuantity(int itemId, string? operation)
+        {
+            List<CartItem>? cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
+
+            var cartItem = cartItems?.FirstOrDefault(c => c.ProductId == itemId);
+
+            if (cartItems == null || cartItem == null)
+            {
+                return RedirectToAction("Cart", "Cart");
+            }
+
+            if (operation == "plus")
+            {
+                cartItem.Count++;
+            }
+            else if (operation == "minus")
+            {
+                cartItem.Count--;
+
+                if (cartItem.Count <= 0)
+                {
+                    cartItems.Remove(cartItem);
+                }
+            }
+
+            HttpContext.Session.SetItemToSession<List<CartItem>>("cart", cartItems);
+            return View();
+        }
     }
 }

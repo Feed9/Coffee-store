@@ -3,37 +3,37 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        @if (await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin"))
-        {
-            <li class="nav-item ">
-                <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Admin Panel</a>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item">
-                <a class="nav-link" id="open-cart" asp-area="" asp-controller="Cart" asp-action="Cart">корзина</a>
-                <div class="modal fade" id="modal-cart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Личный кабинет</a>
-            </li>
-            <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Заказы</a></li>
-        }
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" data-bs-toggle="modal" data-bs-target="#UserLoginModal">Login</a>
-        </li>
-    }
-</ul>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+            @if (await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin"))
+            {
+                <li>
+                    <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Панель Администратора</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a class="nav-link" id="open-cart" asp-area="" asp-controller="Cart" asp-action="Cart">Корзина</a>
+                    <div class="modal fade" id="modal-cart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Личный кабинет</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Index">Заказы</a></li>
+            }
+        </ul>
+    </nav>
+    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button type="submit" class="book-a-table-btn scrollto d-none d-lg-flex logout">Выйти</button>
+    </form>
+}
+else
+{
+    <a class="book-a-table-btn scrollto d-none d-lg-flex" asp-area="Identity" asp-page="/Account/Login" data-bs-toggle="modal" data-bs-target="#UserLoginModal">Войти</a>
+
+}
