@@ -58,7 +58,7 @@ namespace Coffee_store.Areas.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Volume,Price")] Addition addition)
+        public async Task<IActionResult> Create([Bind("Id,Name,Volume,Price,Quantity")] Addition addition)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace Coffee_store.Areas.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Volume,Price")] Addition addition)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Volume,Price,Quantity")] Addition addition)
         {
             if (id != addition.Id)
             {

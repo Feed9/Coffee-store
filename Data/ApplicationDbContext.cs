@@ -13,9 +13,7 @@ namespace Coffee_store.Data
             : base(options)
         {
         }
-        public DbSet<Product> Products { get; set; } = null!;
-        public DbSet<ProductQuantity> ProductQuantities { get; set; } = null!;
-        public DbSet<AdditionQuantity> AdditionQuantities { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;       
         public DbSet<CancellationRequest> CancellationRequests { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Addition> Additions { get; set; } = null!;

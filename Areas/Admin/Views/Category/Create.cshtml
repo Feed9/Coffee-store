@@ -22,8 +22,13 @@
                 <input asp-for="IconPath" class="form-control" />
                 <span asp-validation-for="IconPath" class="text-danger"></span>
             </div>
+             <div class="form-group">
+                <label asp-for="HasAdditions" class="control-label"></label>
+                <input asp-for="HasAdditions" value="true"  type="checkbox" />
+                <span asp-validation-for="HasAdditions" class="text-danger"></span>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn book-a-table-btn" />
             </div>
         </form>
     </div>

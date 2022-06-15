@@ -26,6 +26,7 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Neucha',Arial,sans-serif;
+    color:#d9ba85;
 }
 
 /*--------------------------------------------------------------
@@ -1230,7 +1231,8 @@ section {
 
 /*Checked*/
 .checkbox-btn input[type=checkbox]:checked + span {
-    border: solid red;
+    border: solid #d2c5ac 3px;
+    color: #666;
 }
 
 /* Hover */
@@ -1314,3 +1316,6 @@ section {
     .admin-panel input {
         margin-bottom: 10px;
     }
+#modal-cart{
+    font-size:18px;
+}

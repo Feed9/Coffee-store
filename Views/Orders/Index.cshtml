@@ -8,7 +8,7 @@
 
     @foreach (var item in @Model)
     {
-        <div style="background-color:peachpuff; margin-bottom:10px; padding:10px;">
+        <div style="border:solid 2px #DFD3C3; margin-bottom:10px; padding:10px;">
             <div class="row">
                 <div class="col">
                     <p>@item.Id</p>
@@ -25,10 +25,16 @@
                 <div class="col">
                     <p>@item.Status</p>
                 </div>
-                <div class="col">
-                    <a asp-area="" asp-controller="Orders" asp-action="CancelOrder"
-                    asp-route-id="@item.Id">Отменить заказ</a>
-                </div>
+                @if (item.Status != "Done"
+               && item.Status != "AwaitingCancellationConfirmation"
+               && item.Status != "Cancelled"
+               && item.Status != "CancellationDecline")
+                {
+                    <div class="col">
+                        <a asp-area="" asp-controller="Orders" asp-action="CancelOrder"
+                   asp-route-id="@item.Id">Отменить заказ</a>
+                    </div>
+                }
             </div>
             <div class="row">
                 @foreach (var items in @item.OrderItems)

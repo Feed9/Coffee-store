@@ -1,6 +1,6 @@
 ﻿@using Coffee_store.Models;
 @model Cart
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
     <div class="modal-content">
         <div class="modal-header  text-white" style=" background-color: #1d1d29;">
             <h5 class="modal-title" id="exampleModalLabel">Коризина</h5>
@@ -26,9 +26,15 @@
                                 <p>Additions: @item.AdditionsString</p>
                             </div>
                             <div class="col d-flex">
-                                <button class="minus">-</button>
-                                <p class="cart-item-quantity">@item.Count</p>
-                                <button class="plus">+</button>
+                                <div class="product_count">
+                                    <button class="decrease items-count" type="button" style="font-family:Arial">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span class="" style="font-size:20px;">@item.Count</span>                                   
+                                    <button class="increase items-count" type="button"  style="font-family:Arial" >
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -41,7 +47,7 @@
             <div class="modal-footer">
                 <div class="modal-footer-buttons">
                     <h5>Сумма заказа: @Model?.TotalCost</h5>
-                    <button type="submit">Сделать заказ</button>
+                    <button class="btn book-a-table-btn" type="submit">Сделать заказ</button>
                 </div>
             </div>
         </form>

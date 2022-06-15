@@ -2,66 +2,72 @@
 @{
     ViewData["Title"] = "Catalog Page";
 }
-<div class="container-fluid">
-    <div class="row flex-nowrap">
-        <div class="col-12 px-sm-2 px-0 bg-dark  align-items-center">
-            <div class="d-flex justify-content-center align-items-center align-items-sm-start px-3 pt-2 text-white">
-                <h2>Menu</h2>
-                <div class="row h-100  align-items-center">
-                    @foreach (Category category in ViewBag.catalog.Categories)
-                    {
-
-                        <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                            <a class="nav-link" asp-controller="Catalog" asp-action="Catalog" asp-route-categoryId="@category.Id">
-                                <div class="card card-span h-100 rounded-circle">
-                                    <img class="img-fluid rounded-circle h-100 mh-50px" src="@category.IconPath" alt="...">
-                                    <div class="card-body ps-0">
-                                        <h5 class="text-center fw-bold text-1000 text-truncate mb-2">@category.Name</h5>
-                                    </div>
-                                </div>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+        <span class="navbar-brand">Категории</span>
+        <button class="navbar-toggler"
+                type="button" data-toggle="collapse" data-target="#nextNav"
+                aria-controls="nextNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nextNav">
+            <ul class="navbar-nav mr-auto">
+                @foreach (Category category in ViewBag.catalog.Categories)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Catalog" asp-action="Catalog" asp-route-categoryId="@category.Id" class="nav-link">
+                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">@category.Name</h5>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+    <section class="text-cent mb-4">
+        <div style="display: flex;padding: 20px;background: #00000099">
+            <form method="get" asp-controller="Catalog" asp-action="Catalog">
+                <input name="categoryId" type="hidden" value="@ViewBag.CategoryId" />
+                <select name="sortState" asp-items="@Html.GetEnumSelectList<SortState>()" onchange="this.form.submit()" class="form-select"></select>
+            </form>
+        </div>
+        <div class="row wow fadeIn">
+            @foreach (var product in ViewBag.catalog.Products)
+            {
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="view overlay">
+                            <img src="@product.IconPath" alt="" class="card-img-top">
+                            <a href="">
+                                <div class="mask rgba-white slight"></div>
                             </a>
                         </div>
+                        <div class="card-body text-center">
 
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 side-menu-container">
-            <div style="display: flex;padding: 20px;background: #00000099">
-                <form method="get" asp-controller="Catalog" asp-action="Catalog">
-                    <input name="categoryId" type="hidden" value="@ViewBag.CategoryId" />
-                    <select name="sortState" asp-items="@ViewBag.catalog.SortStates" onchange="this.form.submit()" class="form-select"></select>
-                </form>
-            </div>
-            <div style=" background-color: #3b3b52;">
-                <div class="row">
-                    @foreach (var product in ViewBag.catalog.Products)
-                    {
-                        <div class="col-12 col-sm-6 col-md-4 mb-3   cat-product-card">
-                            <div class="card">
-                                <div class="card-img-top">
-                                    <a><img class="card-img-top" src="@product.IconPath" alt=""></a>
-                                </div>
-                                <div class="cat-product-details">
-                                    <h4 class="card-title">@product.Name</h4>
-                                    <p class="card-text">@product.Description</p>
-                                    <h4>@product.Price р.</h4>
-                                    <div class="btn btn-primary">
-                                        <a class="nav-link text-dark open-card" asp-controller="Catalog"
-                                       asp-action="ProductCard" asp-route-productId="@product.Id">
-                                            Добавить
-                                        </a>
-                                    </div>
-                                </div>
+                            <h5>@product.Name</h5>
+
+                            <h5>
+                                <strong>
+                                    @product.Description
+                                </strong>
+                            </h5>
+
+                        </div>
+                        <div class="card-footer">
+                            <h4 class="font-weight-bold blue-text">
+                                <strong>@product.Price руб.</strong>
+                            </h4>
+                            <div class="btn book-a-table-btn w-100" style="margin:0px;">
+                                <a class="nav-link dark-grey-text  open-card" style="color:black" asp-controller="Catalog"
+                               asp-action="ProductCard" asp-route-productId="@product.Id">
+                                    Добавить
+                                </a>
                             </div>
                         </div>
-                    }
+                    </div>
                 </div>
-            </div>
+            }
         </div>
-    </div>
+    </section>
 </div>
 <div class="modal  fade" id="productCard" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="productCardLabel" aria-hidden="true">
 </div>

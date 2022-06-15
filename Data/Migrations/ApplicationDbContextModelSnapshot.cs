@@ -128,34 +128,15 @@ namespace Coffee_store.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<double>("Volume")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.ToTable("Additions");
-                });
-
-            modelBuilder.Entity("Coffee_store.Data.Entity.AdditionQuantity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AdditionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdditionId")
-                        .IsUnique();
-
-                    b.ToTable("AdditionQuantities");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.CancellationRequest", b =>
@@ -300,6 +281,9 @@ namespace Coffee_store.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<double>("Volume")
                         .HasColumnType("float");
 
@@ -339,29 +323,6 @@ namespace Coffee_store.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Coffee_store.Data.Entity.ProductQuantity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("PriceVolumeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PriceVolumeId")
-                        .IsUnique()
-                        .HasFilter("[PriceVolumeId] IS NOT NULL");
-
-                    b.ToTable("ProductQuantities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -516,17 +477,6 @@ namespace Coffee_store.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Coffee_store.Data.Entity.AdditionQuantity", b =>
-                {
-                    b.HasOne("Coffee_store.Data.Entity.Addition", "Addition")
-                        .WithOne("AdditionQuantity")
-                        .HasForeignKey("Coffee_store.Data.Entity.AdditionQuantity", "AdditionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Addition");
-                });
-
             modelBuilder.Entity("Coffee_store.Data.Entity.CancellationRequest", b =>
                 {
                     b.HasOne("Coffee_store.Data.Entity.Order", "Order")
@@ -575,20 +525,13 @@ namespace Coffee_store.Migrations
 
             modelBuilder.Entity("Coffee_store.Data.Entity.Product", b =>
                 {
-                    b.HasOne("Coffee_store.Data.Entity.Category", null)
+                    b.HasOne("Coffee_store.Data.Entity.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Coffee_store.Data.Entity.ProductQuantity", b =>
-                {
-                    b.HasOne("Coffee_store.Data.Entity.PriceVolume", "PriceVolume")
-                        .WithOne("ProductQuantity")
-                        .HasForeignKey("Coffee_store.Data.Entity.ProductQuantity", "PriceVolumeId");
-
-                    b.Navigation("PriceVolume");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -647,11 +590,6 @@ namespace Coffee_store.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Coffee_store.Data.Entity.Addition", b =>
-                {
-                    b.Navigation("AdditionQuantity");
-                });
-
             modelBuilder.Entity("Coffee_store.Data.Entity.Category", b =>
                 {
                     b.Navigation("Products");
@@ -662,11 +600,6 @@ namespace Coffee_store.Migrations
                     b.Navigation("CancellationRequest");
 
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("Coffee_store.Data.Entity.PriceVolume", b =>
-                {
-                    b.Navigation("ProductQuantity");
                 });
 
             modelBuilder.Entity("Coffee_store.Data.Entity.Product", b =>

@@ -19,8 +19,8 @@ namespace Coffee_store.Controllers
         {
             List<Category> categories = await _context.Categories.ToListAsync();
 
-            IQueryable<Product> products = _context.Products.Include(p => p.PricesAndVolumes).ThenInclude(pv => pv.ProductQuantity)
-                                           .Where(p => p.PricesAndVolumes.Any(pv => pv.ProductQuantity.Quantity > 0));
+            IQueryable<Product> products = _context.Products.Include(p => p.PricesAndVolumes)
+                                           .Where(p => p.PricesAndVolumes.Any(pv => pv.Quantity > 0));
 
             if (categoryId != null)
             {
@@ -39,19 +39,18 @@ namespace Coffee_store.Controllers
 
             Catalog catalog = new Catalog(categories, catalogProducts, sortState);
             catalog.SortProducts();
-
-            ViewBag.sortState = sortState;
+            
             ViewBag.categoryId = categoryId;
             ViewBag.catalog = catalog;
             return View();
         }
         public async Task<IActionResult> ProductCard(int productId)
         {
-            Product? product = await _context.Products.Include(product => product.PricesAndVolumes.Where(pv => pv.ProductQuantity.Quantity > 0))
+            Product? product = await _context.Products.Include(product => product.PricesAndVolumes.Where(pv => pv.Quantity > 0))
                                                       .Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == productId);
 
-            List<Addition> additions = await _context.Additions.Include(ad => ad.AdditionQuantity)
-                .Where(ad => ad.AdditionQuantity!.Quantity > 0).ToListAsync();
+            List<Addition> additions = await _context.Additions
+                .Where(ad => ad.Quantity > 0).ToListAsync();
 
             ProductCard productCard = new ProductCard(product, additions);
 
