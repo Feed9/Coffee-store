@@ -5,15 +5,15 @@
     function onOpenCardClick(event) {
         event.preventDefault();
         var id = $("input[name='product-hidden-id']").val();
-        var url =  $(this).attr("href");       
+        var url = $(this).attr("href");
 
         $.ajax({
             type: "GET",
-            url: url,            
+            url: url,
             success: function (data) {
 
                 $("#productCard").html(data);
-                setUpAddToCartEvent();
+                InitializeCardControllers();
                 $("#productCard").modal('show');
             },
             error: function (xhr, ajaxOptions, thrownError) {

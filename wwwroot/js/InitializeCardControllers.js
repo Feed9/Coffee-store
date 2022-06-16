@@ -1,13 +1,15 @@
 ﻿
-function setUpAddToCartEvent() {
+function InitializeCardControllers() {
 
     var submitButton = $("#productCard button[name='add-to-cart']").click(onAddToCartClick);
+    $(".price").click(onRecalculateTotalCost);
+    onRecalculateTotalCost();
 }
 
 function onAddToCartClick() {
 
     var url = $('#product-form').attr('action');
-    
+
     var CartItem = $('#product-form').serialize();
     $.ajax({
         type: "POST",
@@ -28,4 +30,15 @@ function onAddToCartClick() {
     });
 
 
+}
+function onRecalculateTotalCost() {
+    var totalCost = Number(0);
+    totalCost += Number($("#product-form input[type='radio']:checked").attr("data-price"));
+
+    $('#product-form input:checkbox:checked').each(function () {
+        totalCost += Number($(this).attr("data-price"));
+    });
+
+    $("#cart-total-cost").text(totalCost);
+    console.log("Asd");
 }

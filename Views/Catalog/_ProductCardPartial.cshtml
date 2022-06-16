@@ -26,9 +26,9 @@
                                         @foreach (var volume in @Model?.Product.PricesAndVolumes)
                                         {
 
-                                            <input type="radio" class="btn-check" id="@volume.Id" name="volume"
-                                            value="@volume.Id" autocomplete="off" checked>
-                                            <label for="@volume.Id" class="btn btn-secondary">@volume.Volume ml</label>
+                                            <input type="radio" class="btn-check price" id="@volume.Id" name="volume"
+                                            data-price="@volume.Price" value="@volume.Id" autocomplete="off" checked>
+                                            <label for="@volume.Id" class="btn btn-secondary">@volume.Volume мл.</label>
 
                                         }
                                     </div>
@@ -38,19 +38,20 @@
                             @if (@Model.Product.Category.HasAdditions && @Model?.Additions is not null)
                             {
                                 <h5>Additions</h5>
-                                <div class="form-group row">
+                                <div class="form-group row additions-group">
                                     @foreach (var addition in @Model?.Additions)
                                     {
                                         <div class=" col-12 col-lg-6">
                                             <label class="checkbox-btn">
-                                                <input type="checkbox" value="@addition.Id" name="additions">
+                                                <input type="checkbox" value="@addition.Id" 
+                                                data-price="@addition.Price" name="additions" class="price">
                                                 <span>
                                                     <div class="row">
                                                         <img class="col-6" src="/images/products/combo-1.jpg" style="height:auto;" alt="" />
                                                         <div class="col-6">
                                                             <h5>@addition.Name</h5>
                                                             <div class="d-flex justify-content-between">
-                                                                <p>@addition.Volume</p>
+                                                                <p>@addition.Volume гр.</p>
                                                                 <p>@addition.Price руб.</p>
                                                             </div>
                                                         </div>
@@ -67,9 +68,9 @@
             </div>
             <div class="modal-footer ">
                 <div class="container-fluid">
-                    <div class="row">                        
-                        <div class="modal-footer-buttons col-3 d-flex justify-content-between">
-                            <p id="price">Всего: 420 руб.</p>
+                    <div class="row">
+                        <div class="modal-footer-buttons col-4 d-flex justify-content-between">                            
+                            <p id="price">Всего: <span id="cart-total-cost"></span> руб.</p>
                             <button type="button" name="add-to-cart" class="btn book-a-table-btn">Добавить в корзину</button>
                         </div>
                     </div>
