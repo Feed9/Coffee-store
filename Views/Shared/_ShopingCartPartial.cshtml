@@ -15,7 +15,7 @@
                 else
                 {
                     foreach (var item in @Model.CartItems)
-                    {
+                    {                        
                         <div class="row cart-item">
                             <div class="col cart-item-icon">
                                 <img src="@item.Product?.IconPath" style="height:100px;width:100px;" alt="" />
@@ -27,11 +27,13 @@
                             </div>
                             <div class="col d-flex">
                                 <div class="product_count">
-                                    <button class="decrease items-count" type="button" style="font-family:Arial">
+                                    <button class="decrease items-count" type="button" name="items-count"
+                                    style="font-family:Arial" data-id="@item.Id" data-operation="minus">
                                         <i class="fa-solid fa-minus"></i>
                                     </button>
-                                    <span class="" style="font-size:20px;">@item.Count</span>                                   
-                                    <button class="increase items-count" type="button"  style="font-family:Arial" >
+                                    <span class="" style="font-size:20px;">@item.Count</span>
+                                    <button class="increase items-count" name="items-count" type="button"
+                                    style="font-family:Arial" data-id="@item.Id" data-operation="plus">
                                         <i class="fa-solid fa-plus"></i>
                                     </button>
                                 </div>

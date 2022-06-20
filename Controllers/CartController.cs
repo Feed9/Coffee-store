@@ -27,6 +27,7 @@ namespace Coffee_store.Controllers
 
             CartItem cartItem = new CartItem
             {
+                Id = Guid.NewGuid(),
                 ProductId = productId,
                 Product = _context.Products.FirstOrDefault(product => product.Id == productId),
                 Count = 1,
@@ -59,44 +60,25 @@ namespace Coffee_store.Controllers
 
             return RedirectToAction("Catalog", "Catalog");
         }
+
         public IActionResult Cart()
         {
             List<CartItem>? cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
             Cart cart = new Cart(cartItems);
             return PartialView("_ShopingCartPartial", cart);
-        }
-
-        public IActionResult Remove(int productId)
-        {
-            var cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
-            var index = IsExists(cartItems, productId);
-
-            if (index > -1)
-            {
-                cartItems?.RemoveAt(index);
-
-            }
-
-            HttpContext.Session.SetItemToSession<List<CartItem>>("cart", cartItems);
-            return RedirectToAction("Catalog", "Catalog");
-        }
-        [NonAction]
-        public int IsExists(List<CartItem> cartItems, int cartItemId)
-        {
-            var index = cartItems.FindIndex(0, cartItems.Count, ci => ci.ProductId == cartItemId);
-            return index;
-        }
+        }               
+        
         [NonAction]
         public bool IsExists(List<CartItem> cartItems, CartItem cartItem)
         {
             return cartItems.Contains(cartItem);
         }
 
-        public IActionResult ChangeQuantity(int itemId, string? operation)
+        public IActionResult ChangeQuantity(Guid itemId, string? operation)
         {
             List<CartItem>? cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
 
-            var cartItem = cartItems?.FirstOrDefault(c => c.ProductId == itemId);
+            var cartItem = cartItems?.FirstOrDefault(c => c.Id == itemId);
 
             if (cartItems == null || cartItem == null)
             {
@@ -115,10 +97,10 @@ namespace Coffee_store.Controllers
                 {
                     cartItems.Remove(cartItem);
                 }
-            }
-
+            } 
+            
             HttpContext.Session.SetItemToSession<List<CartItem>>("cart", cartItems);
-            return View();
+            return RedirectToAction("Cart", "Cart");
         }
     }
 }

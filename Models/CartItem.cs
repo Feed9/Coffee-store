@@ -5,6 +5,7 @@ namespace Coffee_store.Models
 {
     public class CartItem
     {
+        public Guid Id { get; set; }
         public int ProductId { get; set; }
         public int Count { get; set; }
         public double Volume { get; set; }

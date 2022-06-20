@@ -3,7 +3,7 @@
 <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel2">Registration</h5>
+            <h5 class="modal-title" id="exampleModalLabel2">Регистрация</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -16,42 +16,42 @@
                 <div class="form-group row">
                     <label asp-for="@Model.Email" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.Email" class="form-control" placeholder="Email" />
+                        <input type="text" asp-for="@Model.Email" class="form-control" placeholder="Почта" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="@Model.Password" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.Password" class="form-control" placeholder="Password" />
+                        <input type="text" asp-for="@Model.Password" class="form-control" placeholder="Пароль" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="@Model.ConfirmPassword" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                        <input type="text" asp-for="@Model.ConfirmPassword" class="form-control" placeholder="Подтввердите пароль" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="@Model.FirstName" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.FirstName" class="form-control" placeholder="First Name" />
+                        <input type="text" asp-for="@Model.FirstName" class="form-control" placeholder="Имя" />
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="@Model.LastName" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.LastName" class="form-control" placeholder="Last Name" />
+                        <input type="text" asp-for="@Model.LastName" class="form-control" placeholder="Фамилия" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>                
                 <div class="form-group row">
                     <label asp-for="@Model.PhoneNumber" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.PhoneNumber" class="form-control" placeholder="Phone Number" />
+                        <input type="text" asp-for="@Model.PhoneNumber" class="form-control" placeholder="Номер телефона" />
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                     <div class="col-sm-12">
                         <div class="form-check">
                             <input asp-for="@Model.AcceptUserAgreement" class="form-check-input" />
-                            <label asp-for="@Model.AcceptUserAgreement" class="form-check-label">I accept the span<a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>    </label>
+                            <label asp-for="@Model.AcceptUserAgreement" class="form-check-label">Я принимаю условия <a href="#">политики компании</a></label>
                         </div>
                     </div>
                 </div>

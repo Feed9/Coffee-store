@@ -3,7 +3,7 @@
 <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Authorization</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Авторизация</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -15,14 +15,14 @@
                 <div class="form-group row">
                     <label asp-for="@Model.Email" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.Email" class="form-control" placeholder="Email" />
+                        <input type="text" asp-for="@Model.Email" class="form-control" placeholder="Ваша почта" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="@Model.Password" class="col-md-4 col-form-label"></label>
                     <div class="col-md-8">
-                        <input type="text" asp-for="@Model.Password" class="form-control" placeholder="Password" />
+                        <input type="text" asp-for="@Model.Password" class="form-control" placeholder="Пароль" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                 </div>
