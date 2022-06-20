@@ -20,6 +20,7 @@ namespace Coffee_store.Controllers
             _context = dbContext;
             _userManager = userManager;
         }
+
         [HttpGet]
         public IActionResult CreateOrder()
         {
@@ -74,7 +75,7 @@ namespace Coffee_store.Controllers
                 return NotFound();
             }
             ViewBag.OrderId = orderId;
-            return View();            
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -101,6 +102,74 @@ namespace Coffee_store.Controllers
                 .Where(or => or.UserId == userId)
                 .ToListAsync();
             return View(orders);
+        }
+
+        [HttpGet]
+        public IActionResult Validate()
+        {
+            List<string> invalidItemsNames = new();
+            var additions = new Dictionary<int, int>();
+
+            var cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
+
+            foreach (var cartItem in cartItems)
+            {
+                if (cartItem.Additions is not null)
+                {
+                    foreach (var addition in cartItem.Additions)
+                    {
+                        if (additions.ContainsKey(addition.Id))
+                        {
+                            additions[addition.Id] += cartItem.Count;
+                            continue;
+                        }
+                        additions[addition.Id] = cartItem.Count;
+
+                    }
+                }
+            }
+
+            var products = cartItems.GroupBy(p => new { p.Product.Id, p.Product.Name, p.Volume }).Select(g => new
+            {
+                Product = g.Key,
+                Name = g.Key.Name,
+                Count = g.Sum(d => d.Count)
+
+            }).ToList();
+
+            foreach (var key in products)
+            {
+                var validItem = _context.PricesVolumes
+                              .Where(pv => pv.ProductId == key.Product.Id
+                              && pv.Volume == key.Product.Volume
+                              && pv.Quantity >= key.Count).FirstOrDefault();
+
+                if (validItem is null)
+                {
+                    invalidItemsNames.Add(key.Name);
+                }
+            }
+            foreach (var addition in additions)
+            {
+                var validItem = _context.Additions
+                              .Where(ad => ad.Id == addition.Key
+                              && ad.Quantity >= addition.Value);
+
+                if (validItem is null)
+                {
+                    var invalidAddition = _context.Additions.FirstOrDefault(a => a.Id == addition.Key);
+                    invalidItemsNames.Add(invalidAddition.Name);
+                }
+            }
+
+            if (invalidItemsNames.Count > 0)
+            {
+                var message = "Нам очень жаль, но мы не сможем доставть следующие товары:\n";
+
+                message += String.Join(",", invalidItemsNames);
+                return BadRequest(message);
+            }
+            return Ok();
         }
     }
 }

@@ -3,6 +3,8 @@ using Coffee_store.Models;
 using Coffee_store.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Coffee_store.Controllers
 {
@@ -23,8 +25,7 @@ namespace Coffee_store.Controllers
             if (productId < 1 || volume < 1)
             {
                 return RedirectToAction("Catalog", "Catalog");
-            }
-
+            }            
             CartItem cartItem = new CartItem
             {
                 Id = Guid.NewGuid(),

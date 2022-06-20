@@ -6,7 +6,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Коризина</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form asp-controller="Orders" asp-action="CreateOrder" method="get">
+        <form id="create-order-form" asp-controller="Orders" asp-action="Validate" method="get">
             <div class="modal-body">
                 @if (@Model is null || @Model?.CartItems is null)
                 {
@@ -15,7 +15,7 @@
                 else
                 {
                     foreach (var item in @Model.CartItems)
-                    {                        
+                    {
                         <div class="row cart-item">
                             <div class="col cart-item-icon">
                                 <img src="@item.Product?.IconPath" style="height:100px;width:100px;" alt="" />
@@ -47,9 +47,11 @@
                 }
             </div>
             <div class="modal-footer">
+                <div><span id="errors"></span></div>
                 <div class="modal-footer-buttons">
                     <h5>Сумма заказа: @Model?.TotalCost</h5>
-                    <button class="btn book-a-table-btn" type="submit">Сделать заказ</button>
+                    <button class="btn book-a-table-btn" id="createOrderBtn" type="button">Сделать заказ</button>
+
                 </div>
             </div>
         </form>
