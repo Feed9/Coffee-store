@@ -7,8 +7,8 @@
 <h1>Продукты</h1>
 
 <p>
-    <a asp-action="Create" asp-route-categoryId="@ViewData["CategoryId"]">Create New</a>
-    <a asp-controller="Category" asp-action="Index" >Back to List</a>
+    <a asp-action="Create" asp-route-categoryId="@ViewData["CategoryId"]">Создать</a>
+    <a asp-controller="Category" asp-action="Index" >Вернуться к категориям</a>
 </p>
 <table class="table admin-panel">
     <thead>
@@ -38,10 +38,10 @@
                 @Html.DisplayFor(modelItem => item.IconPath)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a asp-controller="PriceVolume" asp-action="Index" asp-route-productId="@item.Id">Volume and Price</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a> |
+                <a asp-controller="PriceVolume" asp-action="Index" asp-route-productId="@item.Id">Вариации</a>
             </td>
         </tr>
 }

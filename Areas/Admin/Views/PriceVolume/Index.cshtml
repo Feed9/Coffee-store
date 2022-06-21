@@ -7,8 +7,8 @@
 <h1>Объёмы и цены</h1>
 
 <p>
-    <a asp-action="Create" asp-route-productId="@ViewBag.ProductId">Create New</a>
-    <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@ViewBag.CategoryId">Back to List</a>
+    <a asp-action="Create" asp-route-productId="@ViewBag.ProductId">Создать</a>
+    <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@ViewBag.CategoryId">Вернуться к продуктам</a>
 </p>
 <table class="table admin-panel">
     <thead>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
 }

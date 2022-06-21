@@ -6,10 +6,16 @@ namespace Coffee_store.Data.Entity
     public class Product
     {
         public int Id { get; set; }
+
         [Required]
         [StringLength(100),MinLength(3)]
+        [Display(Name = "Название")]
         public string Name { get; set; }
+
+        [Display(Name = "Описание")]
         public string Description { get; set; }
+
+        [Display(Name = "Путь к изображению")]
         [Required]
         public string IconPath { get; set; }
 

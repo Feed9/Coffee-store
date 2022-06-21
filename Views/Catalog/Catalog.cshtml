@@ -27,7 +27,9 @@
         <div style="display: flex;padding: 20px;background: #00000099">
             <form method="get" asp-controller="Catalog" asp-action="Catalog">
                 <input name="categoryId" type="hidden" value="@ViewBag.CategoryId" />
-                <select name="sortState" asp-items="@Html.GetEnumSelectList<SortState>()" onchange="this.form.submit()" class="form-select"></select>
+                <select name="sortState" asp-items="@Html.GetEnumSelectList<SortState>()" onchange="this.form.submit()" class="form-select">
+                    <option>Сортировка</option>
+                </select>
             </form>
         </div>
         <div class="row wow fadeIn">

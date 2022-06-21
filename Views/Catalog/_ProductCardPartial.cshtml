@@ -20,7 +20,7 @@
                         <div class="col-6">
                             @if (@Model?.Product.PricesAndVolumes is not null)
                             {
-                                <h5>Volume</h5>
+                                <h5>Объём</h5>
                                 <div class=" form-group row">
                                     <div class="form-check form-check-inline d-flex justify-content-center">
                                         @foreach (var volume in @Model?.Product.PricesAndVolumes)
@@ -37,7 +37,7 @@
 
                             @if (@Model.Product.Category.HasAdditions && @Model?.Additions is not null)
                             {
-                                <h5>Additions</h5>
+                                <h5>Добавки</h5>
                                 <div class="form-group row additions-group">
                                     @foreach (var addition in @Model?.Additions)
                                     {

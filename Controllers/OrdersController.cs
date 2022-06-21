@@ -22,7 +22,7 @@ namespace Coffee_store.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateOrder()
+        public async Task<IActionResult> CreateOrder()
         {
             var cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
 
@@ -30,6 +30,8 @@ namespace Coffee_store.Controllers
 
             Cart cart = new Cart(cartItems);
             ViewBag.Cart = cart;
+            var user = await _userManager.GetUserAsync(User);
+            ViewBag.Number = await _userManager.GetPhoneNumberAsync(user);
             return View();
         }
         [HttpPost]
@@ -41,10 +43,11 @@ namespace Coffee_store.Controllers
             if (cartItems is null || cartItems.Count == 0) return RedirectToAction("Index");
 
             Cart cart = new Cart(cartItems);
-
+            int enumIndex = int.Parse(order.PaymentMethod);
             order.Date = DateTime.Now;
             order.Status = OrderStatus.Created.ToString();
             order.Price = cart.TotalCost;
+            order.PaymentMethod = ((PaymentMethod)enumIndex).ToString();
             order.UserId = _userManager.GetUserId(User);
             order.OrderItems = cart.CartItems!.Select(item => new OrderItem()
             {

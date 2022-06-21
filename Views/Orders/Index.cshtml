@@ -11,19 +11,21 @@
         <div style="border:solid 2px #DFD3C3; margin-bottom:10px; padding:10px;">
             <div class="row">
                 <div class="col">
-                    <p>@item.Id</p>
+                    <div class="col">
+                        <p>@item.Id</p>
+                    </div>
+                    <div class="col">
+                        <p>Дата: @item.Date</p>
+                    </div>
+                    <div class="col">
+                        <p>Адрес: @item.Address</p>
+                    </div>
+                    <div class="col">
+                        <p>Способо оплаты: @item.PaymentMethod</p>
+                    </div>
                 </div>
                 <div class="col">
-                    <p>@item.Date</p>
-                </div>
-                <div class="col">
-                    <p>@item.Address</p>
-                </div>
-                <div class="col">
-                    <p>@item.PaymentMethod</p>
-                </div>
-                <div class="col">
-                    <p>@item.Status</p>
+                    <p>Статус заказа: @item.Status</p>
                 </div>
                 @if (item.Status != "Done"
                && item.Status != "AwaitingCancellationConfirmation"

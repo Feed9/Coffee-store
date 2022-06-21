@@ -1,10 +1,10 @@
 ﻿@model Coffee_store.Data.Entity.Addition
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Сохранить";
 }
 
-<h1>Edit</h1>
+<h1>Сохранить</h1>
 
 <h4>Addition</h4>
 <hr />
@@ -34,14 +34,14 @@
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn book-a-table-btn" />
+                <input type="submit" value="Сохранить" class="btn book-a-table-btn" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться</a>
 </div>
 
 @section Scripts {

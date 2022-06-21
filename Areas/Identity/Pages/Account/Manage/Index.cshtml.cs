@@ -32,6 +32,9 @@ namespace Coffee_store.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public string Username { get; set; }
 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -57,7 +60,9 @@ namespace Coffee_store.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Номер телефона")]
+            [RegularExpression(@"^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$",
+            ErrorMessage = "Некорректный формат номера")]
             public string PhoneNumber { get; set; }
         }
 
@@ -65,9 +70,9 @@ namespace Coffee_store.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
             Username = userName;
-
+            FirstName = user.FirstName;
+            LastName = user.LastName;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber

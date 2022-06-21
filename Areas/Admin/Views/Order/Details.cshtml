@@ -40,6 +40,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CancellationRequest.Reason)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CancellationRequest.Reason)
+        </dd>
     </dl>
     <div class="row">
         @foreach (var items in @Model?.OrderItems!)
@@ -66,5 +72,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться</a>
 </div>

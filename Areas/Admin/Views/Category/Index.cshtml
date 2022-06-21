@@ -7,7 +7,7 @@
 <h1>Категории</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Создать</a>
 </p>
 <table class="table admin-panel">
     <thead>
@@ -38,10 +38,10 @@
                     @Html.DisplayFor(modelItem => item.HasAdditions)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@item.Id">Products</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Детали</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a> |
+                    <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@item.Id">Продукты</a>
                 </td>
             </tr>
         }
