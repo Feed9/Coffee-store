@@ -39,7 +39,7 @@ namespace Coffee_store.Controllers
 
             Catalog catalog = new Catalog(categories, catalogProducts, sortState);
             catalog.SortProducts();
-            
+
             ViewBag.categoryId = categoryId;
             ViewBag.catalog = catalog;
             return View();

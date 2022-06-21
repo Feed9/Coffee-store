@@ -5,7 +5,7 @@ namespace Coffee_store.Models
 {
     public class Catalog
     {
-        public Catalog(List<Category> categories, List<CatalogProduct> products,SortState sortState = SortState.NameAsc)
+        public Catalog(List<Category> categories, List<CatalogProduct> products, SortState sortState = SortState.NameAsc)
         {
             Categories = categories;
             Products = products;
@@ -30,6 +30,6 @@ namespace Coffee_store.Models
             SortState.PriceAsc => Products.OrderBy(product => product.Price).ToList(),
             SortState.PriceDesc => Products.OrderByDescending(product => product.Price).ToList(),
             _ => Products.OrderBy(product => product.Name).ToList()
-        };        
+        };
     }
 }

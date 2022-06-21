@@ -8,7 +8,7 @@ namespace Coffee_store.Data.Entity
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100),MinLength(3)]
+        [StringLength(100), MinLength(3)]
         [Display(Name = "Название")]
         public string Name { get; set; }
 

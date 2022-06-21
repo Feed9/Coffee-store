@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Coffee_store.Data;
+using Coffee_store.Data.Entity;
+using Coffee_store.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Coffee_store.Data;
-using Coffee_store.Data.Entity;
-using Microsoft.AspNetCore.Authorization;
-using Coffee_store.Models;
 
 namespace Coffee_store.Areas.Admin.Controllers
 {

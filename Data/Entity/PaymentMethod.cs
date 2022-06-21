@@ -2,11 +2,11 @@
 
 namespace Coffee_store.Data.Entity
 {
-   enum PaymentMethod
+    enum PaymentMethod
     {
-        [Display(Name ="Карта")]
+        [Display(Name = "Карта")]
         Card,
         [Display(Name = "Наличные")]
-        Cash        
+        Cash
     }
 }

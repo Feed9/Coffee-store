@@ -46,7 +46,7 @@ namespace Coffee_store.Data
 
                     var admin = _context.Users.FirstOrDefault(u => u.UserName == "test@yandex.ru");
                     _userManager.AddToRoleAsync(admin, "Admin").GetAwaiter().GetResult();
-                }                
+                }
             }
             return;
         }

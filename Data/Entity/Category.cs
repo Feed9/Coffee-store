@@ -21,7 +21,7 @@ namespace Coffee_store.Data.Entity
         public bool HasAdditions { get; set; }
 
         [ForeignKey("CategoryId")]
-        public virtual ICollection<Product>? Products { get; set; } 
+        public virtual ICollection<Product>? Products { get; set; }
 
     }
 }

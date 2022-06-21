@@ -25,7 +25,7 @@ namespace Coffee_store.Controllers
             if (productId < 1 || volume < 1)
             {
                 return RedirectToAction("Catalog", "Catalog");
-            }            
+            }
             CartItem cartItem = new CartItem
             {
                 Id = Guid.NewGuid(),
@@ -67,8 +67,8 @@ namespace Coffee_store.Controllers
             List<CartItem>? cartItems = HttpContext.Session.GetItemFromSession<List<CartItem>>("cart");
             Cart cart = new Cart(cartItems);
             return PartialView("_ShopingCartPartial", cart);
-        }               
-        
+        }
+
         [NonAction]
         public bool IsExists(List<CartItem> cartItems, CartItem cartItem)
         {
@@ -98,8 +98,8 @@ namespace Coffee_store.Controllers
                 {
                     cartItems.Remove(cartItem);
                 }
-            } 
-            
+            }
+
             HttpContext.Session.SetItemToSession<List<CartItem>>("cart", cartItems);
             return RedirectToAction("Cart", "Cart");
         }

@@ -68,7 +68,7 @@ namespace Coffee_store.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FirstName = model.FirstName,
-                    LastName = model.LastName,                    
+                    LastName = model.LastName,
                     PhoneNumber = model.PhoneNumber
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -88,14 +88,14 @@ namespace Coffee_store.Controllers
         [AllowAnonymous]
         public async Task<bool> UserExists(string? userName)
         {
-            if(userName == null)
+            if (userName == null)
             {
                 return false;
             }
             bool isExists = await _context.Users.AnyAsync(user => user.UserName.ToUpper() == userName.ToUpper());
             return isExists;
         }
-        public void  AddExistedErrorsToModelState(IdentityResult result)
+        public void AddExistedErrorsToModelState(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {

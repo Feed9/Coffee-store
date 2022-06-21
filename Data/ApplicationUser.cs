@@ -12,8 +12,8 @@ namespace Coffee_store.Data
 
         [StringLength(100)]
         public string LastName { get; set; }
-        
+
         [ForeignKey("UserId")]
-        public virtual ICollection<Order>? Orders { get; set; } 
+        public virtual ICollection<Order>? Orders { get; set; }
     }
 }

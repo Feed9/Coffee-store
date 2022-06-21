@@ -1,14 +1,9 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Coffee_store.Data;
 using Coffee_store.Data.Entity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Coffee_store.Areas.Admin
 {
@@ -66,10 +61,10 @@ namespace Coffee_store.Areas.Admin
         public async Task<IActionResult> Create([Bind("Id,ProductId,Price,Volume,Quantity")] PriceVolume priceVolume)
         {
             if (ModelState.IsValid)
-            {                  
+            {
                 _context.Add(priceVolume);
                 await _context.SaveChangesAsync();
-                
+
                 return RedirectToAction(nameof(Index), new { ProductId = priceVolume.ProductId });
             }
             return View(priceVolume);

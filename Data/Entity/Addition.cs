@@ -11,7 +11,7 @@ namespace Coffee_store.Data.Entity
 
         [Required]
         [StringLength(100), MinLength(3)]
-        [Display(Name="Название")]
+        [Display(Name = "Название")]
         public string Name { get; set; }
 
         [Display(Name = "Объём")]

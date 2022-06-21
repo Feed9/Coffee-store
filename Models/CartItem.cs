@@ -40,6 +40,6 @@ namespace Coffee_store.Models
         {
             var additionsTitles = Additions?.Select(ads => ads.Name).ToList();
             return Additions is null ? String.Empty : String.Join(",", additionsTitles!);
-        }       
+        }
     }
 }
